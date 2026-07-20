@@ -1,0 +1,15 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Home from '~/components/Home.astro';
+import { getPortfolioData } from '~/data/portfolio';
+import { UI_BY_LOCALE } from '~/data/ui';
+import { buildHomeJsonLd } from '~/lib/seo';
+
+const locale = 'es' as const;
+const ui = UI_BY_LOCALE[locale];
+const jsonLd = buildHomeJsonLd(locale, getPortfolioData(locale));
+---
+
+<BaseLayout {locale} title={ui.metaTitle} description={ui.metaDescription} keywords={ui.keywords} {jsonLd}>
+  <Home {locale} />
+</BaseLayout>

@@ -1,0 +1,22 @@
+name: CI
+
+# Valida cada push a main y cada PR: typecheck (astro check) + build.
+# Host-agnóstico — no publica nada, solo asegura que el sitio compila.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      # "build" en package.json corre `astro check && astro build`.
+      - run: npm run build

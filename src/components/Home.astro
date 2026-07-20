@@ -1,0 +1,265 @@
+---
+import type { Locale } from '~/data/portfolio';
+import { getPortfolioData } from '~/data/portfolio';
+import { UI_BY_LOCALE } from '~/data/ui';
+import { CV_BY_LOCALE, CONTACT_EMAIL, WORLD3D_URL, PREVIOUS_VERSIONS, homePath } from '~/lib/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const data = getPortfolioData(locale);
+const ui = UI_BY_LOCALE[locale];
+const otherLocale: Locale = locale === 'en' ? 'es' : 'en';
+const year = new Date().getFullYear();
+
+const navItems = [
+  { id: 'about', label: ui.aboutKicker },
+  { id: 'experience', label: ui.nav.experience },
+  { id: 'projects', label: ui.nav.projects },
+];
+---
+
+<div class="mx-auto min-h-screen max-w-6xl px-6 lg:flex lg:justify-between lg:gap-10">
+  <!-- LEFT · sticky identity column -->
+  <header class="pt-12 pb-8 lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-[42%] lg:max-w-md lg:flex-col lg:justify-between lg:py-16">
+    <div>
+      <a href={homePath(locale)} class="faint font-mono text-xs tracking-tight">ismaelhv<span style="color: var(--accent)">.com</span></a>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">{data.profile.name}</h1>
+      <p class="mt-1.5 text-lg font-medium" style="color: var(--accent)">{data.profile.role}</p>
+      <p class="muted mt-4 max-w-xs text-sm leading-relaxed">{data.profile.tagline}</p>
+
+      <!-- actions -->
+      <div class="mt-6 flex flex-wrap items-center gap-2">
+        <a href={CV_BY_LOCALE[locale]} download class="btn btn-primary !px-3 !py-1.5 text-xs">↓ {ui.hero.downloadCV}</a>
+        <a href={`mailto:${CONTACT_EMAIL}`} class="btn !px-3 !py-1.5 text-xs">{ui.hero.contact}</a>
+        <div class="relative" id="versions">
+          <button
+            type="button"
+            id="versions-btn"
+            class="btn !px-3 !py-1.5 text-xs"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="versions-menu"
+          >
+            {ui.previousVersions}
+            <span aria-hidden="true" class="faint">▾</span>
+          </button>
+          <div id="versions-menu" class="versions-menu" role="menu" hidden>
+            {
+              PREVIOUS_VERSIONS.map(v => (
+                <a href={v.url} target="_blank" rel="noopener noreferrer" class="versions-item" role="menuitem">
+                  <span class="flex items-baseline justify-between gap-3">
+                    <span class="font-semibold">
+                      {v.label} <span class="faint font-mono text-xs">· {v.year}</span>
+                    </span>
+                    <span class="link-accent text-xs">↗</span>
+                  </span>
+                  <span class="faint mt-0.5 block font-mono text-xs">{v.stack}</span>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- in-page nav (desktop only) -->
+      <nav class="mt-14 hidden lg:block" aria-label="In-page">
+        <ul class="space-y-3">
+          {
+            navItems.map(item => (
+              <li>
+                <a href={`#${item.id}`} class="side-nav-link" data-nav={item.id}>
+                  <span class="side-nav-line" aria-hidden="true" />
+                  <span class="side-nav-text">{item.label}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <!-- bottom cluster -->
+    <div class="mt-10 lg:mt-0">
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+        {
+          data.profile.socials.map(s => (
+            <a href={s.url} target="_blank" rel="noopener noreferrer" class="muted hover:text-[var(--accent)]">
+              {s.platform}
+            </a>
+          ))
+        }
+        <a href={WORLD3D_URL} class="link-accent">3D ↗</a>
+      </div>
+      <div class="mt-4 flex items-center gap-2">
+        <a href={homePath(otherLocale)} class="tag hover:border-[var(--accent)]" title={ui.langSwitch} aria-label={ui.langSwitch}>
+          {otherLocale.toUpperCase()}
+        </a>
+        <button id="theme-toggle" class="tag cursor-pointer hover:border-[var(--accent)]" title={ui.themeToggle} aria-label={ui.themeToggle}>
+          ◐
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- RIGHT · scrolling content -->
+  <main class="pb-16 lg:w-[54%] lg:py-16">
+    <!-- ABOUT -->
+    <section id="about" class="scroll-mt-8">
+      <p class="kicker mb-4 lg:hidden">{ui.aboutKicker}</p>
+      <div class="muted space-y-4 text-sm leading-relaxed sm:text-[0.95rem]">
+        {data.about.paragraphs.map(p => <p>{p}</p>)}
+      </div>
+      <dl class="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 text-sm sm:grid-cols-3">
+        {
+          data.about.meta.map(([label, value]) => (
+            <div>
+              <dt class="faint text-xs tracking-wide uppercase">{label}</dt>
+              <dd class="mt-0.5 font-medium">{value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="scroll-mt-8 pt-16">
+      <div class="section-divider mb-2 flex items-baseline justify-between pt-6">
+        <p class="kicker">{ui.experienceKicker}</p>
+        <p class="faint font-mono text-xs">{String(data.experiences.length).padStart(2, '0')}</p>
+      </div>
+      {
+        data.experiences.map(exp => (
+          <article class="exp-card group">
+            <div class="grid gap-x-5 gap-y-1.5 sm:grid-cols-[9rem_1fr]">
+              <div class="faint pt-0.5 font-mono text-xs leading-snug">
+                <span class="whitespace-nowrap">{exp.period}</span>
+                <span class="mt-0.5 block">
+                  {exp.current ? <span style="color: var(--accent)">{ui.current}</span> : exp.duration}
+                </span>
+              </div>
+              <div class="min-w-0">
+                <h3 class="text-base font-bold tracking-tight transition-colors group-hover:text-[var(--accent)]">
+                  {exp.company}
+                  {exp.location && <span class="faint text-sm font-normal"> · {exp.location}</span>}
+                </h3>
+                {exp.roles.map(role => (
+                  <div class="mt-2 first:mt-1.5">
+                    <div class="flex flex-wrap items-baseline gap-x-3">
+                      <h4 class="text-sm font-semibold" style="color: var(--accent)">
+                        {role.role}
+                      </h4>
+                      {exp.roles.length > 1 && <p class="faint font-mono text-xs">{role.period}</p>}
+                    </div>
+                    <ul class="muted mt-1 list-disc space-y-0.5 pl-4 text-sm leading-normal">
+                      {role.description.map(line => (
+                        <li>{line}</li>
+                      ))}
+                    </ul>
+                    <div class="mt-2 flex flex-wrap gap-1.5">
+                      {role.tags.map(tag => (
+                        <span class="tag">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+      <a href={CV_BY_LOCALE[locale]} download class="link-accent mt-6 inline-flex items-center gap-1 text-sm font-semibold">
+        ↓ {ui.hero.downloadCV}
+      </a>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="scroll-mt-8 pt-16">
+      <div class="section-divider mb-4 pt-6">
+        <p class="kicker">{ui.projectsKicker}</p>
+        <h2 class="mt-1 text-xl font-bold tracking-tight">{data.sections.projectsHeadline}</h2>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {
+          data.featuredProjects.map(project => (
+            <article class="exp-card flex flex-col">
+              <div class="flex items-baseline justify-between gap-3">
+                <h3 class="font-semibold">{project.title}</h3>
+                {project.year && <span class="faint font-mono text-xs">{project.year}</span>}
+              </div>
+              <p class="muted mt-2 flex-1 text-sm leading-relaxed">{project.description}</p>
+              <div class="mt-3 flex flex-wrap gap-1.5">
+                {project.tags.map(tag => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+              <div class="mt-4 flex gap-4 text-sm">
+                {project.link && (
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" class="link-accent">
+                    {ui.visit} ↗
+                  </a>
+                )}
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" class="link-accent">
+                    {ui.code} ↗
+                  </a>
+                )}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="faint mt-12 text-xs leading-relaxed">
+        © {year} {data.profile.name}. {ui.footer.rights} · Astro · Tailwind CSS.
+      </p>
+    </section>
+  </main>
+</div>
+
+<script>
+  // Previous-versions dropdown
+  const wrap = document.getElementById('versions');
+  const btn = document.getElementById('versions-btn');
+  const menu = document.getElementById('versions-menu');
+  if (wrap && btn && menu) {
+    const setOpen = (open: boolean) => {
+      menu.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+    };
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      setOpen(menu.hidden);
+    });
+    document.addEventListener('click', e => {
+      if (!wrap.contains(e.target as Node)) setOpen(false);
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+
+  // Active-section highlight in the side nav
+  const links = new Map(
+    Array.from(document.querySelectorAll<HTMLElement>('[data-nav]')).map(l => [l.dataset.nav, l]),
+  );
+  if (links.size) {
+    const observer = new IntersectionObserver(
+      entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            links.forEach(l => l.classList.remove('active'));
+            links.get(entry.target.id)?.classList.add('active');
+          }
+        }
+      },
+      { rootMargin: '-35% 0px -60% 0px', threshold: 0 },
+    );
+    ['about', 'experience', 'projects'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  }
+</script>
