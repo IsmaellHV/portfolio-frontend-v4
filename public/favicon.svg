@@ -1,21 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ismaelhv">
   <defs>
-    <linearGradient id="ihv-bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0f172a"/>
-      <stop offset="1" stop-color="#1e293b"/>
+    <linearGradient id="ihv-left" x1="130" y1="176" x2="205" y2="336" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#2DD4BF"/>
     </linearGradient>
-    <linearGradient id="ihv-acc" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#3b82f6"/>
-      <stop offset="1" stop-color="#8b5cf6"/>
+    <linearGradient id="ihv-right" x1="307" y1="176" x2="382" y2="336" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#A855F7"/>
+      <stop offset="1" stop-color="#D946EF"/>
+    </linearGradient>
+    <linearGradient id="ihv-dot" x1="232" y1="172" x2="282" y2="222" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#C026D3"/>
+      <stop offset="1" stop-color="#A855F7"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="14" fill="url(#ihv-bg)"/>
-  <!-- I (thicker serifs for 16px readability) -->
-  <rect x="9" y="14" width="20" height="5" fill="#f8fafc"/>
-  <rect x="15" y="14" width="8" height="36" fill="#f8fafc"/>
-  <rect x="9" y="45" width="20" height="5" fill="#f8fafc"/>
-  <!-- H -->
-  <rect x="34" y="14" width="8" height="36" fill="#f8fafc"/>
-  <rect x="51" y="14" width="8" height="36" fill="#f8fafc"/>
-  <rect x="34" y="28" width="25" height="8" fill="url(#ihv-acc)"/>
+
+  <rect x="46" y="46" width="420" height="420" rx="104" fill="#FFFFFF" stroke="#141B2D" stroke-width="40"/>
+
+  <g fill="none" stroke-width="40" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M205 176 L130 256 L205 336" stroke="url(#ihv-left)"/>
+    <path d="M307 176 L382 256 L307 336" stroke="url(#ihv-right)"/>
+    <path d="M256 252 L256 338" stroke="#1E293B"/>
+  </g>
+  <circle cx="256" cy="198" r="27" fill="url(#ihv-dot)"/>
 </svg>

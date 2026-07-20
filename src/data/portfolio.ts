@@ -294,14 +294,13 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
     featuredProjects: [
       {
         id: '01',
-        title: 'Portfolio v1',
-        description: 'Portfolio personal v1 construido con React, TailwindCSS, NodeJS y TypeScript.',
-        tags: ['React', 'Tailwind', 'Node.js', 'TypeScript'],
-        year: '2024',
-        client: 'Personal',
-        link: 'https://v1.ismaelhv.com/',
-        github: 'https://github.com/IsmaellHV/portfolio-frontend-v1',
-        image: '/src/assets/projects/portfolio-v1.png',
+        title: 'Tawa Telcom',
+        description:
+          'Sitio web del operador de internet Tawa Telcom: consulta de cobertura, planes para hogar y empresas, y pago de recibos en línea (tarjeta y Yape). Fibra óptica y enlaces inalámbricos en Perú.',
+        tags: ['Next.js', 'React', 'TypeScript', 'TailwindCSS'],
+        year: '2026',
+        client: 'Tawa Telecomunicaciones',
+        link: 'https://tawatelcom.com.pe',
       },
       {
         id: '02',
@@ -523,14 +522,13 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
     featuredProjects: [
       {
         id: '01',
-        title: 'Portfolio v1',
-        description: 'Personal portfolio v1 built with React, TailwindCSS, NodeJS and TypeScript.',
-        tags: ['React', 'Tailwind', 'Node.js', 'TypeScript'],
-        year: '2024',
-        client: 'Personal',
-        link: 'https://v1.ismaelhv.com/',
-        github: 'https://github.com/IsmaellHV/portfolio-frontend-v1',
-        image: '/src/assets/projects/portfolio-v1.png',
+        title: 'Tawa Telcom',
+        description:
+          'Website for ISP Tawa Telcom: coverage lookup, home and business plans, and online bill payment (card and Yape). Fiber and fixed-wireless internet in Peru.',
+        tags: ['Next.js', 'React', 'TypeScript', 'TailwindCSS'],
+        year: '2026',
+        client: 'Tawa Telecomunicaciones',
+        link: 'https://tawatelcom.com.pe',
       },
       {
         id: '02',
