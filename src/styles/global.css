@@ -323,3 +323,26 @@ body {
   }
 }
 
+/* ---------- Project tiles (2-col grid) ---------- */
+/* Distinct from .exp-card: a real bordered tile that stays inside its grid
+   cell (no negative margin), so hovered cards never bleed into the gutter. */
+.project-card {
+  border-radius: 0.7rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+@media (hover: hover) {
+  .project-card:hover {
+    background: var(--bg-raised);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -16px rgb(0 0 0 / 0.35);
+  }
+}
+

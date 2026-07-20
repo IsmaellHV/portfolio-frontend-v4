@@ -21,6 +21,7 @@ export interface PreviousVersion {
 }
 
 export const PREVIOUS_VERSIONS: PreviousVersion[] = [
+  { label: 'v2', year: '2025', stack: 'Astro · Tailwind', url: 'https://v2.ismaelhv.com' },
   { label: 'v1', year: '2024', stack: 'React · Tailwind · Node', url: 'https://v1.ismaelhv.com' },
 ];
 

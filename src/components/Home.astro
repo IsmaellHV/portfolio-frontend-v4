@@ -184,10 +184,10 @@ const navItems = [
         <p class="kicker">{ui.projectsKicker}</p>
         <h2 class="mt-1 text-xl font-bold tracking-tight">{data.sections.projectsHeadline}</h2>
       </div>
-      <div class="grid gap-4 sm:grid-cols-2">
+      <div class="grid gap-5 sm:grid-cols-2">
         {
           data.featuredProjects.map(project => (
-            <article class="exp-card flex flex-col">
+            <article class="project-card flex flex-col">
               <div class="flex items-baseline justify-between gap-3">
                 <h3 class="font-semibold">{project.title}</h3>
                 {project.year && <span class="faint font-mono text-xs">{project.year}</span>}
