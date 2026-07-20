@@ -1,30 +1,48 @@
 # Deploy
 
-Sitio estático de Astro (`output: 'static'`). El build genera `dist/`.
+Sitio estático de Astro (`output: 'static'`, base `/`). Mismo flujo que
+tools-astro: se buildea, se empaqueta en una imagen Docker (nginx sirviendo
+`dist/`) y se pushea a un registry. El VPS jala la imagen `:latest`.
 
-## CI
+Rama de despliegue: **`production`**.
 
-`.github/workflows/ci.yml` corre en cada push a `main` y en cada PR:
-`npm ci` + `npm run build` (que incluye `astro check`). No publica nada.
+## Workflow
 
-## Deploy (pendiente de cablear)
+`.github/workflows/ci-production.yml` — al hacer push a `production` (o a mano
+con *workflow_dispatch*): crea `.env` desde `ENV_FILE`, `npm install`, format,
+typecheck, build, calcula versión semántica, y **build + push** de la imagen
+Docker (`PROJECT_NAME:<version>` y `PROJECT_NAME:latest`).
 
-`.github/workflows/deploy.yml` es un **scaffold** para Cloudflare Pages, aún no
-operativo. Para activarlo, cuando creemos el proyecto:
+> Diferencias con tools-astro: base `/` en vez de `/tools` (Dockerfile copia
+> `dist` a la raíz del web root, `nginx.conf` sirve en `/`), y se omite el paso
+> de lint (este proyecto no tiene eslint; sí format + typecheck).
 
-1. Crear el proyecto en Cloudflare Pages (o el host que definamos) y anotar su nombre.
-2. En GitHub → **Settings → Secrets and variables → Actions**, añadir:
-   - `CLOUDFLARE_API_TOKEN` — token con permiso *Cloudflare Pages: Edit*.
-   - `CLOUDFLARE_ACCOUNT_ID`.
-3. Reemplazar `CHANGE_ME` en `deploy.yml` por el nombre del proyecto de Pages.
-4. Configurar en Cloudflare las variables de entorno de producción (ver `.env.example`):
-   `PUBLIC_SITE_URL`, `PUBLIC_WORLD3D_URL`, `PUBLIC_CONTACT_EMAIL`.
+## Variables a crear en GitHub
 
-> Si el host final no es Cloudflare Pages (Vercel, Netlify, VPS, GitHub Pages),
-> se reemplaza el paso de publicación por el del host correspondiente.
+En **Settings → Secrets and variables → Actions → Secrets**:
+
+| # | Nombre            | Valor                                                        |
+|---|-------------------|--------------------------------------------------------------|
+| 1 | `ENV_FILE`        | El `.env` completo en **base64** (`base64 -i .env`)          |
+| 2 | `DOCKER_USER`     | Usuario del registry (Docker Hub)                            |
+| 3 | `DOCKER_PASSWORD` | Password / access token del registry                         |
+| 4 | `PROJECT_NAME`    | Nombre de la imagen, ej. `usuario/portfolio-v4`              |
+
+`ENV_FILE` debe contener las `PUBLIC_*` de `.env.example`
+(`PUBLIC_SITE_URL`, `PUBLIC_WORLD3D_URL`, `PUBLIC_CONTACT_EMAIL`).
+Generarlo: `base64 -i .env | pbcopy` y pegar en el secret.
+
+## Docker / VPS
+
+- `Dockerfile` — `FROM nginx:alpine`, copia `dist/` a `/usr/share/nginx/html`
+  y `nginx.conf`. Expone el puerto 80.
+- En el VPS: el reverse proxy enruta `ismaelhv.com` (raíz) a este contenedor;
+  el contenedor jala `PROJECT_NAME:latest` del registry tras cada push.
 
 ## Pasos manuales (una vez, contigo)
 
-- Crear el repo en GitHub y hacer `git push -u origin main`.
-- Definir la rama de despliegue (hoy los workflows apuntan a `main`).
-- Decidir si v4 toma la raíz `ismaelhv.com` y a dónde queda `v1.ismaelhv.com`.
+1. Crear el repo `IsmaellHV/portfolio-frontend-v4` en GitHub.
+2. `git push -u origin main` y `git push -u origin production`.
+3. Cargar los 4 secretos de la tabla.
+4. En el VPS: apuntar el contenedor a `PROJECT_NAME:latest` y el proxy a la raíz.
+5. Decidir si v4 reemplaza la raíz `ismaelhv.com` y a dónde queda `v1.ismaelhv.com`.

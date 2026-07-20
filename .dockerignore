@@ -1,0 +1,16 @@
+node_modules
+.astro
+.git
+.github
+.env
+.env.*
+*.log
+.DS_Store
+README.md
+DEPLOY.md
+src
+public
+astro.config.mjs
+tsconfig.json
+.prettierrc
+.prettierignore
