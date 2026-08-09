@@ -6,3 +6,9 @@ dist/
 *.tsbuildinfo
 .env.*
 docs/
+.impeccable/
+
+# Entorno: nada real se versiona, solo la plantilla
+.env*
+*.env
+!.env.example
