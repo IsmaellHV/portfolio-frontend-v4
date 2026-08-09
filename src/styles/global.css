@@ -6,10 +6,15 @@
   --bg-raised: #ffffff;
   --fg: #1c1917;
   --fg-muted: #57534e;
-  --fg-faint: #a8a29e;
+  --fg-faint: #6f6862; /* was #a8a29e (2.4:1) → 5.2:1 on bg for WCAG AA */
   --border: #e7e5e4;
-  --accent: #059669;
-  --accent-soft: #ecfdf5;
+  --accent: #08795a; /* jade (same hue as the dark mint) — 5.2:1 text / 5.4:1 CTA (AA) */
+  --accent-soft: #eef3ff;
+  --font-display: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display);
 }
 
 :root[data-theme='dark'] {
@@ -17,10 +22,10 @@
   --bg-raised: #1c1917;
   --fg: #fafaf9;
   --fg-muted: #a8a29e;
-  --fg-faint: #57534e;
+  --fg-faint: #928779; /* was #57534e (2.6:1) → 5.6:1 on dark bg for WCAG AA */
   --border: #292524;
-  --accent: #34d399;
-  --accent-soft: #022c22;
+  --accent: #2de6a6; /* bright mint (from user's "Inspire Hub" ref) — 12:1 on dark bg */
+  --accent-soft: #0e1b33;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,10 +34,10 @@
     --bg-raised: #1c1917;
     --fg: #fafaf9;
     --fg-muted: #a8a29e;
-    --fg-faint: #57534e;
+    --fg-faint: #928779; /* was #57534e (2.6:1) → 5.6:1 on dark bg for WCAG AA */
     --border: #292524;
-    --accent: #34d399;
-    --accent-soft: #022c22;
+    --accent: #2de6a6; /* bright mint (from user's "Inspire Hub" ref) — 12:1 on dark bg */
+    --accent-soft: #0e1b33;
   }
 }
 
@@ -62,6 +67,50 @@ body {
   color: var(--bg);
 }
 
+/* ---------- Accessibility: visible keyboard focus ---------- */
+/* Was scoped to .side-nav-link only; give every interactive element a ring. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+/* Skip-to-content link, visible only when focused */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -3rem;
+  z-index: 60;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.5rem;
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 0.75rem;
+}
+/* Small interactive chips (lang + theme toggle) — 44px tap target, centered glyph */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  color: var(--fg-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+.icon-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 /* ---------- Reusable pieces ---------- */
 .container-page {
   max-width: 44rem;
@@ -76,9 +125,10 @@ body {
 }
 
 .kicker {
+  font-family: var(--font-display);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--accent);
 }
@@ -100,23 +150,28 @@ body {
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.125rem;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
+  justify-content: center;
+  min-height: 44px; /* WCAG 2.5.5 touch target */
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.6rem;
+  font-size: 0.8125rem;
   font-weight: 600;
+  letter-spacing: -0.005em;
   border: 1px solid var(--border);
-  color: var(--fg);
-  background: var(--bg-raised);
+  color: var(--fg-muted);
+  background: transparent;
   transition:
     border-color 0.15s ease,
     background 0.15s ease,
     color 0.15s ease;
 }
 
+/* secondary buttons read as quiet ghosts; only the primary carries the accent */
 .btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  color: var(--fg);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
 }
 
 .btn-primary {
@@ -131,7 +186,8 @@ body {
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
+  background: color-mix(in srgb, var(--accent) 88%, var(--fg));
+  border-color: color-mix(in srgb, var(--accent) 88%, var(--fg));
   color: #fff;
 }
 
@@ -211,6 +267,7 @@ body {
 }
 
 .exp-company {
+  font-family: var(--font-display);
   font-size: clamp(1.25rem, 2.2vw, 1.625rem);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -309,11 +366,56 @@ body {
 /* ---------- Hover cards (experience + projects) ---------- */
 .exp-card {
   border-radius: 0.6rem;
-  padding: 1rem;
+  padding: 1.15rem 1rem;
   margin-inline: -1rem;
   transition:
     background 0.15s ease,
     box-shadow 0.15s ease;
+}
+/* Hairline rhythm so six dense entries don't read as one wall */
+.exp-card + .exp-card {
+  border-top: 1px solid var(--border);
+}
+.exp-card + .exp-card:hover,
+.exp-card:hover + .exp-card {
+  border-top-color: transparent;
+}
+
+/* Progressive disclosure: older roles collapsed behind a native <details> */
+.exp-more {
+  border-top: 1px solid var(--border);
+}
+.exp-more > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--fg-muted);
+  transition: color 0.15s ease;
+}
+.exp-more > summary::-webkit-details-marker {
+  display: none;
+}
+.exp-more > summary::after {
+  content: '↓';
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+.exp-more[open] > summary::after {
+  transform: rotate(180deg);
+}
+.exp-more > summary:hover {
+  color: var(--accent);
+}
+/* first collapsed card sits right under the summary — no double divider */
+.exp-more > .exp-card:first-of-type {
+  border-top: none;
 }
 
 @media (hover: hover) {

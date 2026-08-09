@@ -2,7 +2,8 @@
 import type { Locale } from '~/data/portfolio';
 import { getPortfolioData } from '~/data/portfolio';
 import { UI_BY_LOCALE } from '~/data/ui';
-import { CV_BY_LOCALE, CONTACT_EMAIL, WORLD3D_URL, PREVIOUS_VERSIONS, homePath } from '~/lib/site';
+import { CV_BY_LOCALE, CONTACT_EMAIL, PREVIOUS_VERSIONS, homePath } from '~/lib/site';
+import ExperienceEntry from '~/components/ExperienceEntry.astro';
 
 interface Props {
   locale: Locale;
@@ -13,6 +14,12 @@ const data = getPortfolioData(locale);
 const ui = UI_BY_LOCALE[locale];
 const otherLocale: Locale = locale === 'en' ? 'es' : 'en';
 const year = new Date().getFullYear();
+
+// Show the 4 most recent roles; collapse the rest (ATU, Cobra) behind a toggle
+// so six dense entries don't read as one wall. Data is already newest-first.
+const RECENT_COUNT = 4;
+const recentExperiences = data.experiences.slice(0, RECENT_COUNT);
+const olderExperiences = data.experiences.slice(RECENT_COUNT);
 
 const navItems = [
   { id: 'about', label: ui.aboutKicker },
@@ -29,19 +36,19 @@ const navItems = [
         <img src="/favicon.svg" alt="" width="34" height="34" class="h-[34px] w-[34px]" />
         <span class="faint font-mono text-xs tracking-tight">ismaelhv<span style="color: var(--accent)">.com</span></span>
       </a>
-      <h1 class="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">{data.profile.name}</h1>
-      <p class="mt-1.5 text-lg font-medium" style="color: var(--accent)">{data.profile.role}</p>
+      <h1 class="font-display mt-3 text-3xl font-bold tracking-tight sm:text-[2.6rem] sm:leading-[1.05]">{data.profile.name}</h1>
+      <p class="font-display mt-1.5 text-lg font-medium" style="color: var(--accent)">{data.profile.role}</p>
       <p class="muted mt-4 max-w-xs text-sm leading-relaxed">{data.profile.tagline}</p>
 
       <!-- actions -->
       <div class="mt-6 flex flex-wrap items-center gap-2">
-        <a href={CV_BY_LOCALE[locale]} download class="btn btn-primary !px-3 !py-1.5 text-xs">↓ {ui.hero.downloadCV}</a>
-        <a href={`mailto:${CONTACT_EMAIL}`} class="btn !px-3 !py-1.5 text-xs">{ui.hero.contact}</a>
+        <a href={CV_BY_LOCALE[locale]} download class="btn btn-primary">↓ {ui.hero.downloadCV}</a>
+        <a href={`mailto:${CONTACT_EMAIL}`} class="btn">{ui.hero.contact}</a>
         <div class="relative" id="versions">
           <button
             type="button"
             id="versions-btn"
-            class="btn !px-3 !py-1.5 text-xs"
+            class="btn"
             aria-haspopup="true"
             aria-expanded="false"
             aria-controls="versions-menu"
@@ -86,31 +93,43 @@ const navItems = [
 
     <!-- bottom cluster -->
     <div class="mt-10 lg:mt-0">
-      <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
         {
           data.profile.socials.map(s => (
-            <a href={s.url} target="_blank" rel="noopener noreferrer" class="muted hover:text-[var(--accent)]">
+            <a
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="muted inline-flex min-h-[44px] items-center hover:text-[var(--accent)]"
+            >
               {s.platform}
             </a>
           ))
         }
-        <a href={WORLD3D_URL} class="link-accent">3D ↗</a>
       </div>
       <div class="mt-4 flex items-center gap-2">
-        <a href={homePath(otherLocale)} class="tag hover:border-[var(--accent)]" title={ui.langSwitch} aria-label={ui.langSwitch}>
+        <a href={homePath(otherLocale)} class="icon-btn" title={ui.langSwitch} aria-label={ui.langSwitch}>
           {otherLocale.toUpperCase()}
         </a>
-        <button id="theme-toggle" class="tag cursor-pointer hover:border-[var(--accent)]" title={ui.themeToggle} aria-label={ui.themeToggle}>
-          ◐
+        <button
+          id="theme-toggle"
+          type="button"
+          class="icon-btn cursor-pointer"
+          title={ui.themeToggle}
+          aria-label={ui.themeToggle}
+          aria-pressed="false"
+        >
+          <span aria-hidden="true">◐</span>
         </button>
       </div>
     </div>
   </header>
 
   <!-- RIGHT · scrolling content -->
-  <main class="pb-16 lg:w-[54%] lg:py-16">
+  <main id="main" tabindex="-1" class="pb-16 focus:outline-none lg:w-[54%] lg:py-16">
     <!-- ABOUT -->
     <section id="about" class="scroll-mt-8">
+      <h2 class="sr-only">{ui.aboutKicker}</h2>
       <p class="kicker mb-4 lg:hidden">{ui.aboutKicker}</p>
       <div class="muted space-y-4 text-sm leading-relaxed sm:text-[0.95rem]">
         {data.about.paragraphs.map(p => <p>{p}</p>)}
@@ -130,48 +149,19 @@ const navItems = [
     <!-- EXPERIENCE -->
     <section id="experience" class="scroll-mt-8 pt-16">
       <div class="section-divider mb-2 flex items-baseline justify-between pt-6">
-        <p class="kicker">{ui.experienceKicker}</p>
+        <h2 class="kicker">{ui.experienceKicker}</h2>
         <p class="faint font-mono text-xs">{String(data.experiences.length).padStart(2, '0')}</p>
       </div>
+      {recentExperiences.map(exp => <ExperienceEntry exp={exp} currentLabel={ui.current} />)}
       {
-        data.experiences.map(exp => (
-          <article class="exp-card group">
-            <div class="grid gap-x-5 gap-y-1.5 sm:grid-cols-[9rem_1fr]">
-              <div class="faint pt-0.5 font-mono text-xs leading-snug">
-                <span class="whitespace-nowrap">{exp.period}</span>
-                <span class="mt-0.5 block">
-                  {exp.current ? <span style="color: var(--accent)">{ui.current}</span> : exp.duration}
-                </span>
-              </div>
-              <div class="min-w-0">
-                <h3 class="text-base font-bold tracking-tight transition-colors group-hover:text-[var(--accent)]">
-                  {exp.company}
-                  {exp.location && <span class="faint text-sm font-normal"> · {exp.location}</span>}
-                </h3>
-                {exp.roles.map(role => (
-                  <div class="mt-2 first:mt-1.5">
-                    <div class="flex flex-wrap items-baseline gap-x-3">
-                      <h4 class="text-sm font-semibold" style="color: var(--accent)">
-                        {role.role}
-                      </h4>
-                      {exp.roles.length > 1 && <p class="faint font-mono text-xs">{role.period}</p>}
-                    </div>
-                    <ul class="muted mt-1 list-disc space-y-0.5 pl-4 text-sm leading-normal">
-                      {role.description.map(line => (
-                        <li>{line}</li>
-                      ))}
-                    </ul>
-                    <div class="mt-2 flex flex-wrap gap-1.5">
-                      {role.tags.map(tag => (
-                        <span class="tag">{tag}</span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </article>
-        ))
+        olderExperiences.length > 0 && (
+          <details class="exp-more mt-2">
+            <summary>
+              {ui.experienceMore} ({olderExperiences.length})
+            </summary>
+            {olderExperiences.map(exp => <ExperienceEntry exp={exp} currentLabel={ui.current} />)}
+          </details>
+        )
       }
       <a href={CV_BY_LOCALE[locale]} download class="link-accent mt-6 inline-flex items-center gap-1 text-sm font-semibold">
         ↓ {ui.hero.downloadCV}
@@ -182,14 +172,14 @@ const navItems = [
     <section id="projects" class="scroll-mt-8 pt-16">
       <div class="section-divider mb-4 pt-6">
         <p class="kicker">{ui.projectsKicker}</p>
-        <h2 class="mt-1 text-xl font-bold tracking-tight">{data.sections.projectsHeadline}</h2>
+        <h2 class="font-display mt-1 text-xl font-bold tracking-tight">{data.sections.projectsHeadline}</h2>
       </div>
       <div class="grid gap-5 sm:grid-cols-2">
         {
           data.featuredProjects.map(project => (
             <article class="project-card flex flex-col">
               <div class="flex items-baseline justify-between gap-3">
-                <h3 class="font-semibold">{project.title}</h3>
+                <h3 class="font-display font-semibold">{project.title}</h3>
                 {project.year && <span class="faint font-mono text-xs">{project.year}</span>}
               </div>
               <p class="muted mt-2 flex-1 text-sm leading-relaxed">{project.description}</p>

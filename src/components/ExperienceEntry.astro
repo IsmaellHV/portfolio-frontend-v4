@@ -1,0 +1,49 @@
+---
+import type { Experience } from '~/data/portfolio';
+
+interface Props {
+  exp: Experience;
+  currentLabel: string;
+}
+
+const { exp, currentLabel } = Astro.props;
+---
+
+<article class="exp-card group">
+  <div class="grid gap-x-5 gap-y-1.5 sm:grid-cols-[9rem_1fr]">
+    <div class="faint pt-0.5 font-mono text-xs leading-snug">
+      <span class="whitespace-nowrap">{exp.period}</span>
+      <span class="mt-0.5 block">
+        {exp.current ? <span style="color: var(--accent)">{currentLabel}</span> : exp.duration}
+      </span>
+    </div>
+    <div class="min-w-0">
+      <h3 class="font-display text-base font-bold tracking-tight transition-colors group-hover:text-[var(--accent)]">
+        {exp.company}
+        {exp.location && <span class="faint text-sm font-normal"> · {exp.location}</span>}
+      </h3>
+      {
+        exp.roles.map(role => (
+          <div class="mt-2 first:mt-1.5">
+            <div class="flex flex-wrap items-baseline gap-x-3">
+              <h4 class="text-sm font-semibold" style="color: var(--accent)">
+                {role.role}
+              </h4>
+              {exp.roles.length > 1 && <p class="faint font-mono text-xs">{role.period}</p>}
+            </div>
+            <ul class="muted mt-1 list-disc space-y-0.5 pl-4 text-sm leading-normal">
+              {role.description.map(line => (
+                <li>{line}</li>
+              ))}
+            </ul>
+            <div class="mt-2 flex flex-wrap gap-1.5">
+              {role.tags.map(tag => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</article>

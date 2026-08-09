@@ -9,9 +9,10 @@ export interface UIStrings {
   metaDescription: string;
   keywords: string;
   nav: { experience: string; projects: string; about: string; contact: string };
-  hero: { downloadCV: string; view3D: string; contact: string };
+  hero: { downloadCV: string; contact: string };
   stats: string;
   experienceKicker: string;
+  experienceMore: string;
   projectsKicker: string;
   aboutKicker: string;
   contactKicker: string;
@@ -35,9 +36,10 @@ export const UI_BY_LOCALE: Record<Locale, UIStrings> = {
     keywords:
       'ismael hurtado, senior full-stack engineer, ai engineer, llm, node.js developer, react developer, nestjs, lima peru, portfolio, cv',
     nav: { experience: 'Experience', projects: 'Projects', about: 'About', contact: 'Contact' },
-    hero: { downloadCV: 'Download CV', view3D: 'Explore the 3D world', contact: 'Contact me' },
+    hero: { downloadCV: 'Download CV', contact: 'Contact me' },
     stats: 'At a glance',
     experienceKicker: 'Experience · 2014 — today',
+    experienceMore: 'Earlier roles',
     projectsKicker: 'Selected work',
     aboutKicker: 'About',
     contactKicker: 'Contact',
@@ -59,9 +61,10 @@ export const UI_BY_LOCALE: Record<Locale, UIStrings> = {
     keywords:
       'ismael hurtado, senior full-stack engineer, ingeniero ia, llm, desarrollador node.js, desarrollador react, nestjs, lima peru, portafolio, cv',
     nav: { experience: 'Experiencia', projects: 'Proyectos', about: 'Acerca', contact: 'Contacto' },
-    hero: { downloadCV: 'Descargar CV', view3D: 'Explorar el mundo 3D', contact: 'Contáctame' },
+    hero: { downloadCV: 'Descargar CV', contact: 'Contáctame' },
     stats: 'En resumen',
     experienceKicker: 'Experiencia · 2014 — hoy',
+    experienceMore: 'Roles anteriores',
     projectsKicker: 'Trabajo seleccionado',
     aboutKicker: 'Acerca de mí',
     contactKicker: 'Contacto',
