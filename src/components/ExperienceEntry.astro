@@ -14,11 +14,11 @@ const { exp, currentLabel } = Astro.props;
     <div class="faint pt-0.5 font-mono text-xs leading-snug">
       <span class="whitespace-nowrap">{exp.period}</span>
       <span class="mt-0.5 block">
-        {exp.current ? <span style="color: var(--accent)">{currentLabel}</span> : exp.duration}
+        {exp.current ? <span style="color: var(--accent-ink)">{currentLabel}</span> : exp.duration}
       </span>
     </div>
     <div class="min-w-0">
-      <h3 class="font-display text-base font-bold tracking-tight transition-colors group-hover:text-[var(--accent)]">
+      <h3 class="font-display text-base font-bold tracking-tight transition-colors group-hover:text-[var(--accent-ink)]">
         {exp.company}
         {exp.location && <span class="faint text-sm font-normal"> · {exp.location}</span>}
       </h3>
@@ -26,7 +26,7 @@ const { exp, currentLabel } = Astro.props;
         exp.roles.map(role => (
           <div class="mt-2 first:mt-1.5">
             <div class="flex flex-wrap items-baseline gap-x-3">
-              <h4 class="text-sm font-semibold" style="color: var(--accent)">
+              <h4 class="text-sm font-semibold" style="color: var(--accent-ink)">
                 {role.role}
               </h4>
               {exp.roles.length > 1 && <p class="faint font-mono text-xs">{role.period}</p>}

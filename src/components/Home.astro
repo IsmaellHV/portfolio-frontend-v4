@@ -34,10 +34,10 @@ const navItems = [
     <div>
       <a href={homePath(locale)} class="inline-flex items-center gap-2.5" aria-label="ismaelhv.com">
         <img src="/favicon.svg" alt="" width="34" height="34" class="h-[34px] w-[34px]" />
-        <span class="faint font-mono text-xs tracking-tight">ismaelhv<span style="color: var(--accent)">.com</span></span>
+        <span class="faint font-mono text-xs tracking-tight">ismaelhv<span style="color: var(--accent-ink)">.com</span></span>
       </a>
       <h1 class="font-display mt-3 text-3xl font-bold tracking-tight sm:text-[2.6rem] sm:leading-[1.05]">{data.profile.name}</h1>
-      <p class="font-display mt-1.5 text-lg font-medium" style="color: var(--accent)">{data.profile.role}</p>
+      <p class="font-display mt-1.5 text-lg font-medium" style="color: var(--accent-ink)">{data.profile.role}</p>
       <p class="muted mt-4 max-w-xs text-sm leading-relaxed">{data.profile.tagline}</p>
 
       <!-- actions -->
@@ -100,7 +100,7 @@ const navItems = [
               href={s.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="muted inline-flex min-h-[44px] items-center hover:text-[var(--accent)]"
+              class="muted inline-flex min-h-[44px] items-center hover:text-[var(--accent-ink)]"
             >
               {s.platform}
             </a>
