@@ -2,19 +2,21 @@
 
 /* ---------- Design tokens ---------- */
 :root {
-  --bg: #fafaf9;
+  /* Cool, blue-tinted world (matches v1.ismaelhv.com): the accent only reads
+     as "ours" when the neutrals lean blue too, so the greys are slate, not stone. */
+  --bg: #eef4ff;
   --bg-raised: #ffffff;
-  --fg: #1c1917;
-  --fg-muted: #57534e;
-  --fg-faint: #6f6862; /* was #a8a29e (2.4:1) → 5.2:1 on bg for WCAG AA */
-  --border: #e7e5e4;
-  /* Brand mint lives in both themes, but only as a FILL: as text on a light
-     page it measures 1.55:1. --accent-ink is its readable counterpart. */
-  --accent: #2de6a6; /* brand mint — fills (CTA, pills, active marks) */
-  --accent-ink: #0a6f52; /* accent as text on light bg — 5.9:1 (AA) */
-  --on-accent: #0c0a09; /* text sitting on a mint fill — 12.2:1 */
-  --accent-edge: #0f9c6c; /* defines a mint fill's edge on light — 3.4:1 */
-  --accent-soft: #e8fbf3;
+  --fg: #1e293b; /* 13.3:1 */
+  --fg-muted: #475569; /* 6.9:1 */
+  --fg-faint: #576b85; /* 4.9:1 — still AA, carries dates/labels */
+  --border: #d9e3f5;
+  /* One blue per view: #2563eb clears both roles — 4.7:1 as text on --bg and
+     5.2:1 with white on top — so text and fill share a single colour. */
+  --accent: #2563eb;
+  --accent-ink: #2563eb;
+  --on-accent: #ffffff;
+  --accent-edge: #2563eb;
+  --accent-soft: #dbe8ff;
   --font-display: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -23,29 +25,35 @@
 }
 
 :root[data-theme='dark'] {
-  --bg: #0c0a09;
-  --bg-raised: #1c1917;
-  --fg: #fafaf9;
-  --fg-muted: #a8a29e;
-  --fg-faint: #928779; /* was #57534e (2.6:1) → 5.6:1 on dark bg for WCAG AA */
-  --border: #292524;
-  --accent: #2de6a6; /* brand mint — fills */
-  --accent-ink: #2de6a6; /* on dark the mint itself reads as text — 12:1 */
-  --on-accent: #0c0a09;
-  --accent-edge: #2de6a6;
-  --accent-soft: #06251b;
+  --bg: #0b1220;
+  --bg-raised: #131c2e;
+  --fg: #e8eefc; /* 16.1:1 */
+  --fg-muted: #9fb0cc; /* 8.5:1 */
+  --fg-faint: #8494ae; /* 6.1:1 */
+  --border: #233047;
+  /* Same single-blue rule: #60a5fa reads as text (7.4:1) and takes dark ink on top. */
+  --accent: #60a5fa;
+  --accent-ink: #60a5fa;
+  --on-accent: #0b1220;
+  --accent-edge: #60a5fa;
+  --accent-soft: #10203a;
 }
 
 @media (prefers-color-scheme: dark) {
+  /* Must mirror [data-theme='dark'] token for token — a partial override here
+     leaves light-theme values (e.g. --accent-ink) stranded on a dark canvas. */
   :root:not([data-theme]) {
-    --bg: #0c0a09;
-    --bg-raised: #1c1917;
-    --fg: #fafaf9;
-    --fg-muted: #a8a29e;
-    --fg-faint: #928779; /* was #57534e (2.6:1) → 5.6:1 on dark bg for WCAG AA */
-    --border: #292524;
-    --accent: #2de6a6; /* bright mint (from user's "Inspire Hub" ref) — 12:1 on dark bg */
-    --accent-soft: #0e1b33;
+    --bg: #0b1220;
+    --bg-raised: #131c2e;
+    --fg: #e8eefc;
+    --fg-muted: #9fb0cc;
+    --fg-faint: #8494ae;
+    --border: #233047;
+    --accent: #60a5fa;
+    --accent-ink: #60a5fa;
+    --on-accent: #0b1220;
+    --accent-edge: #60a5fa;
+    --accent-soft: #10203a;
   }
 }
 
