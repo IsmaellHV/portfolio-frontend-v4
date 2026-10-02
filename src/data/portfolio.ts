@@ -304,6 +304,16 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
       },
       {
         id: '02',
+        title: 'Notes',
+        description:
+          'Notas y tareas en el mismo sitio: marcas una línea como tarea dentro de cualquier nota y aparece sola en «Hoy» con su contexto. Cuadernos anidados, diario, búsqueda por relevancia, redactor con IA y notas compartidas por enlace.',
+        tags: ['React', 'NestJS', 'PostgreSQL', 'OpenAI'],
+        year: '2026',
+        client: 'Personal',
+        link: 'https://ismaelhv.com/notes/',
+      },
+      {
+        id: '03',
         title: 'FastLink',
         description:
           'Acortador de URLs gratis, rápido y privado. Protección anti-bots con Cloudflare Turnstile y soporte multi-idioma.',
@@ -315,7 +325,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         image: '/src/assets/projects/fastlink.png',
       },
       {
-        id: '03',
+        id: '04',
         title: 'DevTools',
         description:
           'Set de utilidades para desarrolladores en el navegador: Base64, QR, JSON, AES, JWT y más. Todo se ejecuta localmente, sin uploads.',
@@ -327,7 +337,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         image: '/src/assets/projects/tools.png',
       },
       {
-        id: '04',
+        id: '05',
         title: 'waHub',
         description:
           'Hub para conectar números de WhatsApp con agentes IA y automatizar respuestas. Pensado para agencias y desarrolladores.',
@@ -532,6 +542,16 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
       },
       {
         id: '02',
+        title: 'Notes',
+        description:
+          'Notes and tasks in one place: mark a line as a task inside any note and it shows up in Today with its context. Nested notebooks, a journal, ranked full-text search, an AI writing assistant and read-only share links.',
+        tags: ['React', 'NestJS', 'PostgreSQL', 'OpenAI'],
+        year: '2026',
+        client: 'Personal',
+        link: 'https://ismaelhv.com/notes/',
+      },
+      {
+        id: '03',
         title: 'FastLink',
         description:
           'Free, fast and privacy-friendly URL shortener. Cloudflare Turnstile protection and multi-language support.',
@@ -543,7 +563,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         image: '/src/assets/projects/fastlink.png',
       },
       {
-        id: '03',
+        id: '04',
         title: 'DevTools',
         description:
           'Set of in-browser developer utilities: Base64, QR, JSON, AES, JWT and more. Everything runs locally — no uploads.',
@@ -555,7 +575,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         image: '/src/assets/projects/tools.png',
       },
       {
-        id: '04',
+        id: '05',
         title: 'waHub',
         description:
           'Hub to connect WhatsApp numbers with AI agents and automate replies. Built for agencies and developers.',
