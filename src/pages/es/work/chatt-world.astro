@@ -1,0 +1,14 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import CaseStudyPage from '~/components/CaseStudyPage.astro';
+import { CHATT_WORLD, CHATT_WORLD_PATHS } from '~/data/case-studies';
+import { buildCaseStudyJsonLd } from '~/lib/seo';
+
+const locale = 'es' as const;
+const study = CHATT_WORLD[locale];
+const jsonLd = buildCaseStudyJsonLd(locale, study, CHATT_WORLD_PATHS);
+---
+
+<BaseLayout {locale} title={study.metaTitle} description={study.metaDescription} paths={CHATT_WORLD_PATHS} ogType="article" {jsonLd}>
+  <CaseStudyPage {locale} {study} paths={CHATT_WORLD_PATHS} />
+</BaseLayout>

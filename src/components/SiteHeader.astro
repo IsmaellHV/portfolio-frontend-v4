@@ -1,0 +1,77 @@
+---
+import type { Locale } from '~/data/portfolio';
+import { UI_BY_LOCALE } from '~/data/ui';
+import { CV_BY_LOCALE, homePath } from '~/lib/site';
+
+interface Props {
+  locale: Locale;
+  /** Path of the current page in each locale, for the EN/ES switch. */
+  paths: Record<Locale, string>;
+  /** Home shows the section links; inner pages show a link back to the work. */
+  variant?: 'home' | 'inner';
+  backLabel?: string;
+}
+
+const { locale, paths, variant = 'home', backLabel } = Astro.props;
+const ui = UI_BY_LOCALE[locale];
+const home = homePath(locale);
+const sections = [
+  { id: 'experience', label: ui.nav.experience },
+  { id: 'work', label: ui.nav.work },
+  { id: 'skills', label: ui.nav.skills },
+  { id: 'contact', label: ui.nav.contact },
+];
+const locales: Locale[] = ['en', 'es'];
+---
+
+<header class="site-header">
+  <nav aria-label={ui.nav.label} class="site-nav wrap">
+    <a href={variant === 'home' ? '#top' : home} class="wordmark">ismaelhv<span class="ink">.com</span></a>
+    {
+      variant === 'home' && (
+        <div class="nav-links">
+          {sections.map(s => (
+            <a class="nav-link" href={`#${s.id}`}>
+              {s.label}
+            </a>
+          ))}
+        </div>
+      )
+    }
+    <div class="nav-actions">
+      <div class="lang-switch">
+        {
+          locales.map(l => (
+            <a
+              href={paths[l]}
+              hreflang={l}
+              lang={l}
+              aria-current={l === locale ? 'page' : undefined}
+              aria-label={l === 'en' ? 'English' : 'Español'}
+            >
+              {l.toUpperCase()}
+            </a>
+          ))
+        }
+      </div>
+      <button id="theme-toggle" type="button" class="icon-btn" aria-label={ui.themeToggle} aria-pressed="false">
+        <svg class="i-sun" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <svg class="i-moon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+      </button>
+      {
+        variant === 'home' ? (
+          <a class="btn btn-primary btn-sm" href={CV_BY_LOCALE[locale]} download aria-label={ui.downloadCV}>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
+            <span class="hide-xs">{ui.downloadCV}</span>
+            <span class="show-xs">CV</span>
+          </a>
+        ) : (
+          <a class="btn btn-ghost btn-sm" href={`${home}#work`} aria-label={backLabel}>
+            <span aria-hidden="true">←</span>
+            <span class="hide-xs">{backLabel}</span>
+          </a>
+        )
+      }
+    </div>
+  </nav>
+</header>

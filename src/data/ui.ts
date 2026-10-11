@@ -1,82 +1,116 @@
 import type { Locale } from '~/data/portfolio';
 
-/**
- * v4-only UI strings. Kept out of portfolio.ts so that file stays an exact
- * copy of v3's (it gets re-synced when the shared data changes).
- */
+/** Interface copy. Content (experience, products, skills) lives in portfolio.ts. */
 export interface UIStrings {
   metaTitle: string;
   metaDescription: string;
   keywords: string;
-  nav: { experience: string; projects: string; about: string; contact: string };
-  hero: { downloadCV: string; contact: string };
-  stats: string;
-  experienceKicker: string;
-  experienceMore: string;
-  projectsKicker: string;
-  aboutKicker: string;
-  contactKicker: string;
-  contactHeadline: string;
-  contactBody: string;
-  contactCta: string;
-  footer: { rights: string };
+  skipLink: string;
+  nav: { label: string; experience: string; work: string; skills: string; contact: string };
   themeToggle: string;
-  langSwitch: string;
-  current: string;
-  visit: string;
-  code: string;
-  previousVersions: string;
+  downloadCV: string;
+  viewExperience: string;
+  chatFigure: string;
+  chatCaption: string;
+  readCaseStudy: string;
+  visitSite: string;
+  experience: { kicker: string; title: string; fullHistory: string };
+  work: { kicker: string; title: string; lead: string; role: string; stack: string };
+  skills: { kicker: string; title: string; education: string; certifications: string };
+  contact: {
+    kicker: string;
+    title: string;
+    lead: string;
+    roles: string;
+    workMode: string;
+    timeZone: string;
+    cvEn: string;
+    cvEs: string;
+  };
+  footer: { place: string; version: string };
 }
 
 export const UI_BY_LOCALE: Record<Locale, UIStrings> = {
   en: {
-    metaTitle: 'Ismael Hurtado — Senior Full-Stack Engineer · AI / LLM',
+    metaTitle: 'Ismael Hurtado · Senior Full Stack Engineer, AI and LLM',
     metaDescription:
-      'Senior Full-Stack Engineer based in Lima, Peru. 10+ years building web and mobile products with Node.js, React, NestJS and AI/LLM automation. Download my CV or explore the interactive 3D world.',
+      'Senior Full Stack Engineer in Lima, Peru. 10+ years building React, Node.js and TypeScript platforms, plus self-hosted LLMs and RAG. Experience, selected products and CV.',
     keywords:
-      'ismael hurtado, senior full-stack engineer, ai engineer, llm, node.js developer, react developer, nestjs, lima peru, portfolio, cv',
-    nav: { experience: 'Experience', projects: 'Projects', about: 'About', contact: 'Contact' },
-    hero: { downloadCV: 'Download CV', contact: 'Contact me' },
-    stats: 'At a glance',
-    experienceKicker: 'Experience · 2014 — today',
-    experienceMore: 'Earlier roles',
-    projectsKicker: 'Selected work',
-    aboutKicker: 'About',
-    contactKicker: 'Contact',
-    contactHeadline: "Let's talk about your next project.",
-    contactBody: 'Drop me a line and I will reply within 24 hours.',
-    contactCta: 'Write me',
-    footer: { rights: 'All rights reserved.' },
-    themeToggle: 'Toggle theme',
-    langSwitch: 'Cambiar a español',
-    current: 'Present',
-    visit: 'Visit',
-    code: 'Code',
-    previousVersions: 'Previous versions',
+      'ismael hurtado, senior full stack engineer, ai engineer, llm, node.js developer, react developer, nestjs, lima peru, portfolio, cv',
+    skipLink: 'Skip to content',
+    nav: { label: 'Main', experience: 'Experience', work: 'Work', skills: 'Skills', contact: 'Contact' },
+    themeToggle: 'Toggle dark theme',
+    downloadCV: 'Download CV',
+    viewExperience: 'View experience',
+    chatFigure: 'Preview of Chatt World, a chat I built',
+    chatCaption: 'Chatt World, a product I designed and built',
+    readCaseStudy: 'Read case study',
+    visitSite: 'Visit site',
+    experience: { kicker: '01 · Experience', title: 'Where I have worked', fullHistory: 'Full history in the CV' },
+    work: {
+      kicker: '02 · Selected work',
+      title: 'Selected products',
+      lead: 'Products I designed, built and run, from internet provider platforms to my own apps.',
+      role: 'Role',
+      stack: 'Stack',
+    },
+    skills: {
+      kicker: '03 · Skills',
+      title: 'What I work with',
+      education: 'Education',
+      certifications: 'Recent certifications',
+    },
+    contact: {
+      kicker: '04 · Contact',
+      title: 'Open to full-time roles',
+      lead: 'Senior full stack or AI engineering positions, working inside a product or engineering team.',
+      roles: 'Roles',
+      workMode: 'Work mode',
+      timeZone: 'Time zone',
+      cvEn: 'CV in English',
+      cvEs: 'CV en español',
+    },
+    footer: { place: 'Lima, Peru', version: 'Version' },
   },
   es: {
-    metaTitle: 'Ismael Hurtado — Senior Full-Stack Engineer · IA / LLM',
+    metaTitle: 'Ismael Hurtado · Senior Full Stack Engineer, IA y LLM',
     metaDescription:
-      'Senior Full-Stack Engineer en Lima, Perú. Más de 10 años construyendo productos web y móviles con Node.js, React, NestJS y automatización con IA/LLM. Descarga mi CV o explora el mundo 3D interactivo.',
+      'Senior Full Stack Engineer en Lima, Perú. Más de 10 años construyendo plataformas con React, Node.js y TypeScript, además de LLM self-hosted y RAG. Experiencia, productos destacados y CV.',
     keywords:
-      'ismael hurtado, senior full-stack engineer, ingeniero ia, llm, desarrollador node.js, desarrollador react, nestjs, lima peru, portafolio, cv',
-    nav: { experience: 'Experiencia', projects: 'Proyectos', about: 'Acerca', contact: 'Contacto' },
-    hero: { downloadCV: 'Descargar CV', contact: 'Contáctame' },
-    stats: 'En resumen',
-    experienceKicker: 'Experiencia · 2014 — hoy',
-    experienceMore: 'Roles anteriores',
-    projectsKicker: 'Trabajo seleccionado',
-    aboutKicker: 'Acerca de mí',
-    contactKicker: 'Contacto',
-    contactHeadline: 'Conversemos sobre tu próximo proyecto.',
-    contactBody: 'Escríbeme y te responderé en menos de 24 horas.',
-    contactCta: 'Escríbeme',
-    footer: { rights: 'Todos los derechos reservados.' },
-    themeToggle: 'Cambiar tema',
-    langSwitch: 'Switch to English',
-    current: 'Actual',
-    visit: 'Visitar',
-    code: 'Código',
-    previousVersions: 'Versiones anteriores',
+      'ismael hurtado, senior full stack engineer, ingeniero ia, llm, desarrollador node.js, desarrollador react, nestjs, lima peru, portafolio, cv',
+    skipLink: 'Saltar al contenido',
+    nav: { label: 'Principal', experience: 'Experiencia', work: 'Trabajo', skills: 'Habilidades', contact: 'Contacto' },
+    themeToggle: 'Activar tema oscuro',
+    downloadCV: 'Descargar CV',
+    viewExperience: 'Ver experiencia',
+    chatFigure: 'Vista previa de Chatt World, un chat que construí',
+    chatCaption: 'Chatt World, un producto que diseñé y construí',
+    readCaseStudy: 'Leer caso de estudio',
+    visitSite: 'Visitar sitio',
+    experience: { kicker: '01 · Experiencia', title: 'Dónde he trabajado', fullHistory: 'Historial completo en el CV' },
+    work: {
+      kicker: '02 · Trabajo seleccionado',
+      title: 'Productos destacados',
+      lead: 'Productos que diseñé, construí y opero, desde plataformas para proveedores de internet hasta apps propias.',
+      role: 'Rol',
+      stack: 'Stack',
+    },
+    skills: {
+      kicker: '03 · Habilidades',
+      title: 'Con qué trabajo',
+      education: 'Educación',
+      certifications: 'Certificaciones recientes',
+    },
+    contact: {
+      kicker: '04 · Contacto',
+      title: 'Abierto a puestos a tiempo completo',
+      lead: 'Puestos senior de full stack o de ingeniería de IA, dentro de un equipo de producto o de ingeniería.',
+      roles: 'Roles',
+      workMode: 'Modalidad',
+      timeZone: 'Zona horaria',
+      cvEn: 'CV in English',
+      cvEs: 'CV en español',
+    },
+    footer: { place: 'Lima, Perú', version: 'Versión' },
   },
 };

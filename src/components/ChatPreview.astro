@@ -1,0 +1,41 @@
+---
+import type { ChatPreview } from '~/data/portfolio';
+
+interface Props {
+  chat: ChatPreview;
+}
+
+const { chat } = Astro.props;
+---
+
+<div class="chat">
+  <div class="chat-head">
+    <div class="chat-group">
+      <span class="chat-avatar" aria-hidden="true">{chat.initials}</span>
+      <div>
+        <p class="chat-name">{chat.group}</p>
+        <p class="chat-members">{chat.members}</p>
+      </div>
+    </div>
+    <span class="pill pill-accent">{chat.reading}</span>
+  </div>
+  <div class="chat-body">
+    {
+      chat.messages.map(m => (
+        <div class:list={['bubble-wrap', { own: m.own }]}>
+          {!m.own && <p class="bubble-note">{m.note}</p>}
+          <p class="bubble">{m.text}</p>
+          {m.own && <p class="bubble-note">{m.note}</p>}
+        </div>
+      ))
+    }
+  </div>
+  <div class="chat-foot">
+    <div class="composer">
+      <span>{chat.composer}</span>
+      <span class="composer-send" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </div>
+  </div>
+</div>

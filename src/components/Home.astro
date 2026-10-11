@@ -2,8 +2,11 @@
 import type { Locale } from '~/data/portfolio';
 import { getPortfolioData } from '~/data/portfolio';
 import { UI_BY_LOCALE } from '~/data/ui';
-import { CV_BY_LOCALE, CONTACT_EMAIL, PREVIOUS_VERSIONS, homePath } from '~/lib/site';
-import ExperienceEntry from '~/components/ExperienceEntry.astro';
+import { CV_BY_LOCALE, CONTACT_EMAIL, homePath } from '~/lib/site';
+import { CHATT_WORLD_PATHS } from '~/data/case-studies';
+import SiteHeader from '~/components/SiteHeader.astro';
+import SiteFooter from '~/components/SiteFooter.astro';
+import ChatPreview from '~/components/ChatPreview.astro';
 
 interface Props {
   locale: Locale;
@@ -12,249 +15,255 @@ interface Props {
 const { locale } = Astro.props;
 const data = getPortfolioData(locale);
 const ui = UI_BY_LOCALE[locale];
-const otherLocale: Locale = locale === 'en' ? 'es' : 'en';
-const year = new Date().getFullYear();
-
-// Show the 4 most recent roles; collapse the rest (ATU, Cobra) behind a toggle
-// so six dense entries don't read as one wall. Data is already newest-first.
-const RECENT_COUNT = 4;
-const recentExperiences = data.experiences.slice(0, RECENT_COUNT);
-const olderExperiences = data.experiences.slice(RECENT_COUNT);
-
-const navItems = [
-  { id: 'about', label: ui.aboutKicker },
-  { id: 'experience', label: ui.nav.experience },
-  { id: 'projects', label: ui.nav.projects },
-];
+const cv = CV_BY_LOCALE[locale];
+const paths = { en: homePath('en'), es: homePath('es') };
+const linkedin = data.profile.socials.find(s => s.platform === 'LinkedIn');
+const external = { target: '_blank', rel: 'noopener noreferrer' };
 ---
 
-<div class="mx-auto min-h-screen max-w-6xl px-6 lg:flex lg:justify-between lg:gap-10">
-  <!-- LEFT · sticky identity column -->
-  <header class="pt-12 pb-8 lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-[42%] lg:max-w-md lg:flex-col lg:justify-between lg:py-16">
-    <div>
-      <a href={homePath(locale)} class="inline-flex items-center gap-2.5" aria-label="ismaelhv.com">
-        <img src="/favicon.svg" alt="" width="34" height="34" class="h-[34px] w-[34px]" />
-        <span class="faint font-mono text-xs tracking-tight">ismaelhv<span style="color: var(--accent-ink)">.com</span></span>
-      </a>
-      <h1 class="font-display mt-3 text-3xl font-bold tracking-tight sm:text-[2.6rem] sm:leading-[1.05]">{data.profile.name}</h1>
-      <p class="font-display mt-1.5 text-lg font-medium" style="color: var(--accent-ink)">{data.profile.role}</p>
-      <p class="muted mt-4 max-w-xs text-sm leading-relaxed">{data.profile.tagline}</p>
+<SiteHeader {locale} {paths} />
 
-      <!-- actions -->
-      <div class="mt-6 flex flex-wrap items-center gap-2">
-        <a href={CV_BY_LOCALE[locale]} download class="btn btn-primary">↓ {ui.hero.downloadCV}</a>
-        <a href={`mailto:${CONTACT_EMAIL}`} class="btn">{ui.hero.contact}</a>
-        <div class="relative" id="versions">
-          <button
-            type="button"
-            id="versions-btn"
-            class="btn"
-            aria-haspopup="true"
-            aria-expanded="false"
-            aria-controls="versions-menu"
-          >
-            {ui.previousVersions}
-            <span aria-hidden="true" class="faint">▾</span>
-          </button>
-          <div id="versions-menu" class="versions-menu" role="menu" hidden>
-            {
-              PREVIOUS_VERSIONS.map(v => (
-                <a href={v.url} target="_blank" rel="noopener noreferrer" class="versions-item" role="menuitem">
-                  <span class="flex items-baseline justify-between gap-3">
-                    <span class="font-semibold">
-                      {v.label} <span class="faint font-mono text-xs">· {v.year}</span>
-                    </span>
-                    <span class="link-accent text-xs">↗</span>
-                  </span>
-                  <span class="faint mt-0.5 block font-mono text-xs">{v.stack}</span>
-                </a>
-              ))
-            }
-          </div>
-        </div>
+<main id="main" tabindex="-1">
+  <span id="top"></span>
+
+  <section aria-labelledby="hero-title" class="wrap hero">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="dot" aria-hidden="true"></span>{data.hero.eyebrow}</p>
+      <h1 id="hero-title" class="hero-title">{data.hero.title}</h1>
+      <p class="hero-lead">{data.hero.lead}</p>
+      <div class="actions">
+        <a class="btn btn-primary" href={cv} download>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
+          {ui.downloadCV}
+        </a>
+        <a class="btn btn-ghost" href="#experience">
+          {ui.viewExperience}
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+        </a>
       </div>
+      <div class="hero-links">
+        {
+          data.profile.socials.map(s => (
+            <a class="text-link tap" href={s.url} {...external}>
+              {s.platform} ↗
+            </a>
+          ))
+        }
+        <a class="text-link tap" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      </div>
+    </div>
+    <figure aria-label={ui.chatFigure} class="hero-figure">
+      <ChatPreview chat={data.chat} />
+      <figcaption class="hero-caption">
+        <span>{ui.chatCaption}</span>
+        <a class="text-link" href={CHATT_WORLD_PATHS[locale]}>{ui.readCaseStudy} →</a>
+      </figcaption>
+    </figure>
+  </section>
 
-      <!-- in-page nav (desktop only) -->
-      <nav class="mt-14 hidden lg:block" aria-label="In-page">
-        <ul class="space-y-3">
-          {
-            navItems.map(item => (
-              <li>
-                <a href={`#${item.id}`} class="side-nav-link" data-nav={item.id}>
-                  <span class="side-nav-line" aria-hidden="true" />
-                  <span class="side-nav-text">{item.label}</span>
+  <section id="experience" aria-labelledby="exp-title" class="band">
+    <div class="wrap section">
+      <div class="section-head">
+        <p class="kicker">{ui.experience.kicker}</p>
+        <h2 id="exp-title" class="h2">{ui.experience.title}</h2>
+      </div>
+      <ol class="exp-list">
+        {
+          data.experiences.map(exp => (
+            <li class="exp">
+              <div class="exp-when">
+                <p class="exp-period">{exp.period}</p>
+                <p class="exp-place">{exp.place}</p>
+              </div>
+              <div class="exp-body">
+                <h3 class="exp-title">
+                  {exp.role} <span class="exp-company">· {exp.company}</span>
+                </h3>
+                <ul class="bullets muted">
+                  {exp.bullets.map(b => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
+                <p class="stack">{exp.stack.join(' · ')}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <a class="text-link tap muted" href={cv} download>{ui.experience.fullHistory} →</a>
+    </div>
+  </section>
+
+  <section id="work" aria-labelledby="work-title" class="wrap section">
+    <div class="section-head section-head-split">
+      <div class="section-head">
+        <p class="kicker">{ui.work.kicker}</p>
+        <h2 id="work-title" class="h2">{ui.work.title}</h2>
+      </div>
+      <p class="muted section-lead">{ui.work.lead}</p>
+    </div>
+
+    {
+      data.featuredProducts.map(p => (
+        <article class="card feature">
+          <div class="feature-main">
+            <div class="pills">
+              <span class:list={['pill', p.accent ? 'pill-accent' : 'pill-neutral']}>{p.badge}</span>
+              <span class="pill pill-outline">{p.meta}</span>
+            </div>
+            <h3 class="feature-title">{p.title}</h3>
+            <p class="feature-summary muted">{p.summary}</p>
+            <ul class="bullets">
+              {p.highlights.map(h => (
+                <li>{h}</li>
+              ))}
+            </ul>
+            {(p.caseStudy || p.link) && (
+              <div class="feature-links">
+                {p.caseStudy && (
+                  <a class="btn btn-ghost btn-sm" href={p.caseStudy}>
+                    {ui.readCaseStudy} →
+                  </a>
+                )}
+                {p.link && (
+                  <a class="text-link tap muted" href={p.link} {...external}>
+                    {ui.visitSite} ↗
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+          <dl class="feature-aside">
+            <div>
+              <dt class="label">{ui.work.role}</dt>
+              <dd>{p.role}</dd>
+            </div>
+            <div>
+              <dt class="label">{ui.work.stack}</dt>
+              <dd class="muted">{p.stack.join(' · ')}</dd>
+            </div>
+          </dl>
+        </article>
+      ))
+    }
+
+    <div class="product-grid">
+      {
+        data.products.map(p => (
+          <article class="card product">
+            <div class="product-meta">
+              <span>{p.kind}</span>
+              {p.link ? (
+                <a class="text-link" href={p.link} {...external}>
+                  {p.linkLabel} ↗
                 </a>
+              ) : (
+                p.note && <span>{p.note}</span>
+              )}
+            </div>
+            <h3 class="product-title">{p.title}</h3>
+            <p class="muted">{p.description}</p>
+            <p class="stack product-stack">{p.stack.join(' · ')}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-title" class="wrap section">
+    <div class="section-head">
+      <p class="kicker">{ui.skills.kicker}</p>
+      <h2 id="skills-title" class="h2">{ui.skills.title}</h2>
+    </div>
+    <div class="rule-grid rule-grid-4">
+      {
+        data.skills.map(g => (
+          <div class="rule-item">
+            <h3 class="rule-title">{g.title}</h3>
+            <p class="muted">{g.items}</p>
+          </div>
+        ))
+      }
+    </div>
+    <div class="info-cards">
+      <div class="info-card">
+        <h3 class="label">{ui.skills.education}</h3>
+        {
+          data.education.map(e => (
+            <p>
+              <strong>{e.degree}</strong>
+              <br />
+              <span class="muted">{e.detail}</span>
+            </p>
+          ))
+        }
+      </div>
+      <div class="info-card">
+        <h3 class="label">{ui.skills.certifications}</h3>
+        <ul class="cert-list">
+          {
+            data.certifications.map(c => (
+              <li>
+                <span>{c.name}</span>
+                <span class="faint">
+                  {c.issuer} · {c.year}
+                </span>
               </li>
             ))
           }
         </ul>
-      </nav>
-    </div>
-
-    <!-- bottom cluster -->
-    <div class="mt-10 lg:mt-0">
-      <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
-        {
-          data.profile.socials.map(s => (
-            <a
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="muted inline-flex min-h-[44px] items-center hover:text-[var(--accent-ink)]"
-            >
-              {s.platform}
-            </a>
-          ))
-        }
-      </div>
-      <div class="mt-4 flex items-center gap-2">
-        <a href={homePath(otherLocale)} class="icon-btn" title={ui.langSwitch} aria-label={ui.langSwitch}>
-          {otherLocale.toUpperCase()}
-        </a>
-        <button
-          id="theme-toggle"
-          type="button"
-          class="icon-btn cursor-pointer"
-          title={ui.themeToggle}
-          aria-label={ui.themeToggle}
-          aria-pressed="false"
-        >
-          <span aria-hidden="true">◐</span>
-        </button>
       </div>
     </div>
-  </header>
+  </section>
 
-  <!-- RIGHT · scrolling content -->
-  <main id="main" tabindex="-1" class="pb-16 focus:outline-none lg:w-[54%] lg:py-16">
-    <!-- ABOUT -->
-    <section id="about" class="scroll-mt-8">
-      <h2 class="sr-only">{ui.aboutKicker}</h2>
-      <p class="kicker mb-4 lg:hidden">{ui.aboutKicker}</p>
-      <div class="muted space-y-4 text-sm leading-relaxed sm:text-[0.95rem]">
-        {data.about.paragraphs.map(p => <p>{p}</p>)}
+  <section id="contact" aria-labelledby="contact-title" class="band band-top">
+    <div class="wrap section">
+      <div class="section-head">
+        <p class="kicker">{ui.contact.kicker}</p>
+        <h2 id="contact-title" class="h2">{ui.contact.title}</h2>
+        <p class="section-lead-lg muted">{ui.contact.lead}</p>
       </div>
-      <dl class="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 text-sm sm:grid-cols-3">
-        {
-          data.about.meta.map(([label, value]) => (
-            <div>
-              <dt class="faint text-xs tracking-wide uppercase">{label}</dt>
-              <dd class="mt-0.5 font-medium">{value}</dd>
-            </div>
-          ))
-        }
+      <dl class="rule-grid rule-grid-3">
+        <div class="rule-item">
+          <dt class="label">{ui.contact.roles}</dt>
+          <dd class="contact-value">
+            {
+              data.contact.roles.map((r, i) => (
+                <>
+                  {i > 0 && <br />}
+                  {r}
+                </>
+              ))
+            }
+          </dd>
+        </div>
+        <div class="rule-item">
+          <dt class="label">{ui.contact.workMode}</dt>
+          <dd class="contact-value">{data.contact.workMode}</dd>
+        </div>
+        <div class="rule-item">
+          <dt class="label">{ui.contact.timeZone}</dt>
+          <dd class="contact-value">
+            {data.contact.timeZone}
+            <br />
+            <span class="muted">{data.contact.timeZoneNote}</span>
+          </dd>
+        </div>
       </dl>
-    </section>
-
-    <!-- EXPERIENCE -->
-    <section id="experience" class="scroll-mt-8 pt-16">
-      <div class="section-divider mb-2 flex items-baseline justify-between pt-6">
-        <h2 class="kicker">{ui.experienceKicker}</h2>
-        <p class="faint font-mono text-xs">{String(data.experiences.length).padStart(2, '0')}</p>
-      </div>
-      {recentExperiences.map(exp => <ExperienceEntry exp={exp} currentLabel={ui.current} />)}
-      {
-        olderExperiences.length > 0 && (
-          <details class="exp-more mt-2">
-            <summary>
-              {ui.experienceMore} ({olderExperiences.length})
-            </summary>
-            {olderExperiences.map(exp => <ExperienceEntry exp={exp} currentLabel={ui.current} />)}
-          </details>
-        )
-      }
-      <a href={CV_BY_LOCALE[locale]} download class="link-accent mt-6 inline-flex items-center gap-1 text-sm font-semibold">
-        ↓ {ui.hero.downloadCV}
-      </a>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" class="scroll-mt-8 pt-16">
-      <div class="section-divider mb-4 pt-6">
-        <p class="kicker">{ui.projectsKicker}</p>
-        <h2 class="font-display mt-1 text-xl font-bold tracking-tight">{data.sections.projectsHeadline}</h2>
-      </div>
-      <div class="grid gap-5 sm:grid-cols-2">
+      <div class="actions">
+        <a class="btn btn-primary" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         {
-          data.featuredProjects.map(project => (
-            <article class="project-card flex flex-col">
-              <div class="flex items-baseline justify-between gap-3">
-                <h3 class="font-display font-semibold">{project.title}</h3>
-                {project.year && <span class="faint font-mono text-xs">{project.year}</span>}
-              </div>
-              <p class="muted mt-2 flex-1 text-sm leading-relaxed">{project.description}</p>
-              {project.tags.length > 0 && (
-                <div class="mt-3 flex flex-wrap gap-1.5">
-                  {project.tags.map(tag => (
-                    <span class="tag">{tag}</span>
-                  ))}
-                </div>
-              )}
-              <div class="mt-4 flex gap-4 text-sm">
-                {project.link && (
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" class="link-accent">
-                    {ui.visit} ↗
-                  </a>
-                )}
-                {project.github && (
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" class="link-accent">
-                    {ui.code} ↗
-                  </a>
-                )}
-              </div>
-            </article>
-          ))
+          linkedin && (
+            <a class="btn btn-ghost" href={linkedin.url} {...external}>
+              LinkedIn
+            </a>
+          )
         }
+        <a class="btn btn-ghost" href={CV_BY_LOCALE.en} download hreflang="en">{ui.contact.cvEn}</a>
+        <a class="btn btn-ghost" href={CV_BY_LOCALE.es} download hreflang="es">{ui.contact.cvEs}</a>
       </div>
+    </div>
+  </section>
+</main>
 
-      <p class="faint mt-12 text-xs leading-relaxed">
-        © {year} {data.profile.name}. {ui.footer.rights} · Astro · Tailwind CSS.
-      </p>
-    </section>
-  </main>
-</div>
-
-<script>
-  // Previous-versions dropdown
-  const wrap = document.getElementById('versions');
-  const btn = document.getElementById('versions-btn');
-  const menu = document.getElementById('versions-menu');
-  if (wrap && btn && menu) {
-    const setOpen = (open: boolean) => {
-      menu.hidden = !open;
-      btn.setAttribute('aria-expanded', String(open));
-    };
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      setOpen(menu.hidden);
-    });
-    document.addEventListener('click', e => {
-      if (!wrap.contains(e.target as Node)) setOpen(false);
-    });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') setOpen(false);
-    });
-  }
-
-  // Active-section highlight in the side nav
-  const links = new Map(
-    Array.from(document.querySelectorAll<HTMLElement>('[data-nav]')).map(l => [l.dataset.nav, l]),
-  );
-  if (links.size) {
-    const observer = new IntersectionObserver(
-      entries => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            links.forEach(l => l.classList.remove('active'));
-            links.get(entry.target.id)?.classList.add('active');
-          }
-        }
-      },
-      { rootMargin: '-35% 0px -60% 0px', threshold: 0 },
-    );
-    ['about', 'experience', 'projects'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-  }
-</script>
+<SiteFooter {locale} />

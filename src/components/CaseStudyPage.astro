@@ -1,0 +1,146 @@
+---
+import type { Locale } from '~/data/portfolio';
+import type { CaseStudy } from '~/data/case-studies';
+import { UI_BY_LOCALE } from '~/data/ui';
+import { CV_BY_LOCALE, homePath } from '~/lib/site';
+import SiteHeader from '~/components/SiteHeader.astro';
+import SiteFooter from '~/components/SiteFooter.astro';
+
+interface Props {
+  locale: Locale;
+  study: CaseStudy;
+  paths: Record<Locale, string>;
+}
+
+const { locale, study, paths } = Astro.props;
+const ui = UI_BY_LOCALE[locale];
+const host = new URL(study.url).host;
+---
+
+<SiteHeader {locale} {paths} variant="inner" backLabel={study.backLabel} />
+
+<main id="main" tabindex="-1">
+  <section aria-labelledby="cs-title" class="wrap cs-hero">
+    <p class="eyebrow"><span class="dot" aria-hidden="true"></span>{study.eyebrow}</p>
+    <h1 id="cs-title" class="cs-title">{study.title}</h1>
+    <p class="cs-lead muted">{study.lead}</p>
+    <div class="actions">
+      <a class="btn btn-primary" href={study.url} target="_blank" rel="noopener noreferrer">{study.visitLabel} ↗</a>
+    </div>
+    <dl class="facts">
+      {
+        study.facts.map(([label, value]) => (
+          <div>
+            <dt class="label">{label}</dt>
+            <dd>{value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section aria-label={study.screenshot.caption} class="wrap cs-shot">
+    <figure class="browser">
+      <div class="browser-bar" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <span class="browser-url">{host}</span>
+      </div>
+      <img
+        src={study.screenshot.src}
+        alt={study.screenshot.alt}
+        width={study.screenshot.width}
+        height={study.screenshot.height}
+        loading="lazy"
+        decoding="async"
+      />
+      <figcaption class="muted">{study.screenshot.caption}</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="problem-title" class="band-line">
+    <div class="wrap section cs-split">
+      <div class="cs-split-head">
+        <p class="kicker">{study.problem.kicker}</p>
+        <h2 id="problem-title" class="h3">{study.problem.title}</h2>
+      </div>
+      <div class="cs-split-body muted">
+        {study.problem.paragraphs.map(p => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="built-title" class="band">
+    <div class="wrap section">
+      <div class="section-head">
+        <p class="kicker">{study.built.kicker}</p>
+        <h2 id="built-title" class="h3">{study.built.title}</h2>
+      </div>
+      <div class="built-grid">
+        {
+          study.built.groups.map(g => (
+            <div class="built-card">
+              <h3 class="rule-title">{g.title}</h3>
+              <ul class="bullets muted">
+                {g.items.map(i => (
+                  <li>{i}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="arch-title" class="wrap section">
+    <div class="section-head">
+      <p class="kicker">{study.architecture.kicker}</p>
+      <h2 id="arch-title" class="h3">{study.architecture.title}</h2>
+    </div>
+    <ol class="layers">
+      {
+        study.architecture.layers.map(l => (
+          <li class:list={['layer', { core: l.core }]}>
+            <p class="layer-label">{l.label}</p>
+            <p class="layer-name">{l.name}</p>
+            <p class="layer-detail muted">{l.detail}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section aria-labelledby="eng-title" class="band-line">
+    <div class="wrap section">
+      <div class="section-head">
+        <p class="kicker">{study.highlights.kicker}</p>
+        <h2 id="eng-title" class="h3">{study.highlights.title}</h2>
+      </div>
+      <div class="rule-grid rule-grid-3">
+        {
+          study.highlights.items.map(h => (
+            <div class="rule-item">
+              <h3 class="rule-title">{h.title}</h3>
+              <p class="muted">{h.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="next-title" class="wrap cs-next-wrap">
+    <div class="cs-next">
+      <div>
+        <p class="kicker">{study.next.kicker}</p>
+        <h2 id="next-title" class="cs-next-title">{study.next.title}</h2>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href={`${homePath(locale)}#work`}>{study.next.back}</a>
+        <a class="btn btn-ghost" href={CV_BY_LOCALE[locale]} download>{ui.downloadCV}</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<SiteFooter {locale} showVersions={false} />

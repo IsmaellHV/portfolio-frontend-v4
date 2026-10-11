@@ -1,5 +1,8 @@
 import type { Locale, PortfolioData } from '~/data/portfolio';
+import type { CaseStudy } from '~/data/case-studies';
 import { SITE_URL, absoluteUrl, homePath } from '~/lib/site';
+
+const PERSON_ID = `${SITE_URL}/#person`;
 
 /**
  * JSON-LD for the home page: Person (rich result for personal brand)
@@ -10,10 +13,10 @@ export function buildHomeJsonLd(locale: Locale, data: PortfolioData) {
 
   const person = {
     '@type': 'Person',
-    '@id': `${SITE_URL}/#person`,
+    '@id': PERSON_ID,
     name: data.profile.name,
     alternateName: 'Ismael Hurtado',
-    jobTitle: locale === 'es' ? 'Senior Full-Stack Engineer · IA / LLM' : 'Senior Full-Stack Engineer · AI / LLM',
+    jobTitle: data.profile.role,
     description: data.profile.summary,
     url: SITE_URL,
     email: 'ismaelhurtadov@gmail.com',
@@ -41,9 +44,35 @@ export function buildHomeJsonLd(locale: Locale, data: PortfolioData) {
       '@type': 'WebSite',
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: 'Ismael Hurtado — Portfolio',
+      name: 'Ismael Hurtado · Portfolio',
       inLanguage: [locale],
-      publisher: { '@id': `${SITE_URL}/#person` },
+      publisher: { '@id': PERSON_ID },
+    },
+  ];
+}
+
+/** JSON-LD for a case study: the page itself plus the product it describes. */
+export function buildCaseStudyJsonLd(locale: Locale, study: CaseStudy, paths: Record<Locale, string>) {
+  const url = absoluteUrl(paths[locale]);
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${url}#webpage`,
+      url,
+      name: study.metaTitle,
+      description: study.metaDescription,
+      inLanguage: locale,
+      isPartOf: { '@id': `${SITE_URL}/#website` },
+      author: { '@id': PERSON_ID },
+      about: {
+        '@type': 'SoftwareApplication',
+        name: study.title,
+        url: study.url,
+        applicationCategory: 'CommunicationApplication',
+        operatingSystem: 'Web',
+        creator: { '@id': PERSON_ID },
+      },
     },
   ];
 }

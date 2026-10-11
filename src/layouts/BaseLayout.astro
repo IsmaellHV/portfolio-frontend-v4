@@ -1,7 +1,12 @@
 ---
 import '@fontsource-variable/space-grotesk';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource-variable/jetbrains-mono';
 import '~/styles/global.css';
 import type { Locale } from '~/data/portfolio';
+import { UI_BY_LOCALE } from '~/data/ui';
 import { absoluteUrl, homePath } from '~/lib/site';
 
 interface Props {
@@ -10,13 +15,25 @@ interface Props {
   description: string;
   keywords?: string;
   jsonLd?: object[];
+  /** Path of this page in each locale; defaults to the home pages. */
+  paths?: Record<Locale, string>;
+  ogType?: 'profile' | 'article';
 }
 
-const { locale, title, description, keywords, jsonLd = [] } = Astro.props;
+const {
+  locale,
+  title,
+  description,
+  keywords,
+  jsonLd = [],
+  paths = { en: homePath('en'), es: homePath('es') },
+  ogType = 'profile',
+} = Astro.props;
 
-const canonical = absoluteUrl(homePath(locale));
-const altEn = absoluteUrl(homePath('en'));
-const altEs = absoluteUrl(homePath('es'));
+const ui = UI_BY_LOCALE[locale];
+const canonical = absoluteUrl(paths[locale]);
+const altEn = absoluteUrl(paths.en);
+const altEs = absoluteUrl(paths.es);
 const ogImage = absoluteUrl('/og.png');
 ---
 
@@ -37,9 +54,8 @@ const ogImage = absoluteUrl('/og.png');
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="profile" />
-    <meta property="og:site_name" content="Ismael Hurtado — Portfolio" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Ismael Hurtado · Portfolio" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -47,29 +63,29 @@ const ogImage = absoluteUrl('/og.png');
     <meta property="og:locale" content={locale === 'es' ? 'es_PE' : 'en_US'} />
     <meta property="og:locale:alternate" content={locale === 'es' ? 'en_US' : 'es_PE'} />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <meta name="theme-color" content="#eef4ff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f7f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0c0b" media="(prefers-color-scheme: dark)" />
 
-    {jsonLd.map(block => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}
+    {jsonLd.map(block => <script is:inline type="application/ld+json" set:html={JSON.stringify(block)} />)}
 
-    <!-- Theme init: runs before paint to avoid flash -->
     <script is:inline>
       (() => {
-        const saved = localStorage.getItem('pf4_theme');
-        if (saved === 'dark' || saved === 'light') {
-          document.documentElement.dataset.theme = saved;
-        }
+        try {
+          const saved = localStorage.getItem('pf4_theme');
+          if (saved === 'dark' || saved === 'light') {
+            document.documentElement.dataset.theme = saved;
+          }
+        } catch {}
       })();
     </script>
   </head>
-  <body class="min-h-screen antialiased">
-    <a href="#main" class="skip-link">{locale === 'es' ? 'Saltar al contenido' : 'Skip to content'}</a>
+  <body>
+    <a href="#main" class="skip-link">{ui.skipLink}</a>
     <slot />
 
     <script is:inline>
@@ -84,7 +100,9 @@ const ogImage = absoluteUrl('/og.png');
         btn?.addEventListener('click', () => {
           const next = isDark() ? 'light' : 'dark';
           root.dataset.theme = next;
-          localStorage.setItem('pf4_theme', next);
+          try {
+            localStorage.setItem('pf4_theme', next);
+          } catch {}
           syncPressed();
         });
       })();

@@ -1,0 +1,39 @@
+---
+import type { Locale } from '~/data/portfolio';
+import { getPortfolioData } from '~/data/portfolio';
+import { UI_BY_LOCALE } from '~/data/ui';
+import { PREVIOUS_VERSIONS } from '~/lib/site';
+
+interface Props {
+  locale: Locale;
+  showVersions?: boolean;
+}
+
+const { locale, showVersions = true } = Astro.props;
+const ui = UI_BY_LOCALE[locale];
+const data = getPortfolioData(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <p>© {year} Ismael Hurtado · {ui.footer.place}</p>
+    <div class="footer-links">
+      {
+        data.profile.socials.map(s => (
+          <a class="text-link" href={s.url} target="_blank" rel="noopener noreferrer">
+            {s.platform}
+          </a>
+        ))
+      }
+      {
+        showVersions &&
+          PREVIOUS_VERSIONS.map(v => (
+            <a class="text-link" href={v.url} target="_blank" rel="noopener noreferrer">
+              {ui.footer.version} {v.label.replace('v', '')} ({v.year})
+            </a>
+          ))
+      }
+    </div>
+  </div>
+</footer>
