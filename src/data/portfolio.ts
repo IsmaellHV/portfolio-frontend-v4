@@ -151,74 +151,34 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
     ],
     experiences: [
       {
-        company: 'SICRED — México',
-        period: 'May 2025 — Jul 2026',
-        duration: '1 año',
-        location: 'Remoto',
+        company: 'Sicred Informática Ltda',
+        period: 'Ene 2026 — Sep 2026',
+        duration: '9 meses',
+        location: 'México, crédito hipotecario · Remoto',
         roles: [
           {
-            role: 'Full-Stack Developer · Freelance',
-            period: 'May 2025 — Jul 2026',
+            role: 'Desarrollador Full Stack Senior',
+            period: 'Ene 2026 — Sep 2026',
             description: [
-              'Desarrollé una plataforma de microservicios (NestJS + Fastify + Prisma) para la gestión de promotores y operaciones de crédito, bajo arquitectura Hexagonal + DDD + Clean.',
-              'Construí la aplicación móvil (React Native + Expo, TypeScript) y el frontend web (React + RSuite + Tailwind) que consumen los microservicios.',
-              'Construí una plataforma de comparación de documentos jurídicos con un microservicio de OCR propio en Python (FastAPI + PyMuPDF + Tesseract) que digitaliza PDFs escaneados y un motor de IA self-hosted (Ollama) que contrasta documentos y resume expedientes en un chat.',
-              'Automaticé el CI/CD con GitHub Actions (entornos QA y producción): build y push de imágenes con Docker Buildx, versionado semántico y escaneo de secretos (gitleaks), con orquestación de contenedores en Docker Compose.',
-              'Reforcé la seguridad con Cloudflare (WAF, rate limiting y Turnstile anti-bot) y protegí las APIs a nivel de aplicación con rate limiting (Fastify) y cabeceras de seguridad (Helmet).',
+              'Desarrollé una plataforma de microservicios (NestJS + Fastify + Prisma) para la gestión de promotores y operaciones de crédito, con app móvil (React Native + Expo) y frontend web (React + RSuite + Tailwind), bajo arquitectura Hexagonal + DDD + Clean.',
+              'Desarrollo DAEFlow, la plataforma de originación de expedientes hipotecarios FOVISSSTE: flujo del expediente por etapas, notarías y seguimiento, con tableros de mercado, mapas y comparación de entidades financieras.',
+              'Construí el sistema de Verificación de Obra en campo: microservicios para órdenes RUV, asignación, avance, bitácora de obra y los formatos de INFONAVIT; app móvil (React Native + Expo) con geolocalización, mapas, almacenamiento local (SQLite) y avisos en tiempo real; panel web con mapas (Leaflet).',
+              'Construí una plataforma de comparación de documentos jurídicos con un microservicio de OCR propio en Python (FastAPI + PyMuPDF + Tesseract) y un motor de IA self-hosted (Ollama) que contrasta documentos y resume expedientes en un chat.',
+              'Automaticé el CI/CD con GitHub Actions (QA y producción: Docker Buildx, versionado semántico, escaneo de secretos con gitleaks) y reforcé la seguridad con Cloudflare (WAF, rate limiting, Turnstile), rate limiting por aplicación y Helmet.',
             ],
             tags: ['NestJS', 'React Native', 'Prisma', 'Python', 'Ollama', 'Cloudflare'],
           },
         ],
       },
       {
-        company: 'Exandal Holding Group',
-        period: 'Jul 2025 — Jun 2026',
-        duration: '1 año',
-        location: 'Lima, Perú — Agroindustria',
-        roles: [
-          {
-            role: 'Full-Stack Developer · Autónomo',
-            period: 'Jul 2025 — Jun 2026',
-            description: [
-              'Mantuve y amplié el sistema de gestión y análisis de calidad agroindustrial (ensayos de laboratorio, trazabilidad por lote) en Node.js.',
-              'Amplié las integraciones del sistema: SAP (HANA vía driver hdb), balanzas por SerialPort y reportería en Excel/PDF.',
-              'Desarrollé el módulo de Tickets (mesa de ayuda interna sobre SAP HANA): flujo de asignación, proceso, revisión y cierre con prioridades, adjuntos, notas con acuse de lectura, notificaciones por correo, planificador Gantt y un panel de reportes/KPIs.',
-              'Construí ExcoBot, un chatbot con OpenAI (function calling) que entrega la trazabilidad de órdenes SAP en lenguaje natural, con gráficos de indicadores (KPI).',
-              'Diseñé un chatbot con RAG de recuperación híbrida para trazar resultados de calidad e inocuidad.',
-            ],
-            tags: ['Node.js', 'SAP HANA', 'OpenAI', 'RAG'],
-          },
-        ],
-      },
-      {
-        company: 'BizPeru',
-        period: 'Ene 2025 — Dic 2025',
-        duration: '1 año',
-        location: 'Remoto, Perú — ISP / WiFi',
-        roles: [
-          {
-            role: 'Full-Stack Developer · Freelance',
-            period: 'Ene 2025 — Dic 2025',
-            description: [
-              'Construí un chatbot de WhatsApp (whatsapp-web.js + OpenAI) con gestión multi-sesión y comunicación en tiempo real (SocketCluster) para atención al cliente.',
-              'Integré la pasarela de pago Niubiz en la tienda online (checkout con tokenización de tarjeta y captura del cargo), con backend NestJS + Fastify + Prisma y frontend Next.js 16 + Tailwind.',
-              'Automaticé la red ISP: aprovisioné hotspots WiFi en MikroTik (RouterOS API) e integré SmartOLT (fibra óptica), con facturación y vouchers en PDF.',
-              'Configuré el CI/CD con GitHub Actions (build y push de imágenes con Docker Buildx y versionado semántico) y orquesté los servicios con Docker Compose.',
-              'Protegí las APIs con Cloudflare (WAF, rate limiting y Turnstile anti-bot) y endurecí la aplicación con rate limiting (Express/Fastify) y cabeceras de seguridad (Helmet).',
-            ],
-            tags: ['NestJS', 'Next.js', 'OpenAI', 'MikroTik', 'Cloudflare'],
-          },
-        ],
-      },
-      {
         company: 'Municipalidad Metropolitana de Lima',
-        period: 'Jun 2023 — Mar 2026',
-        duration: '3 años',
+        period: 'Jul 2023 — Dic 2025',
+        duration: '2 años 6 meses',
         location: 'Cercado de Lima — Sistema SIAM',
         roles: [
           {
-            role: 'Analista Programador Senior · Híbrido',
-            period: 'Jun 2023 — Mar 2026',
+            role: 'Analista Programador Senior · Locación de servicios, híbrido',
+            period: 'Jul 2023 — Dic 2025',
             description: [
               'Formé parte del equipo que desarrolló el SIAM, un ecosistema de microservicios Node.js/TypeScript con Docker, CI/CD por módulo (GitHub Actions) y arquitectura Hexagonal + DDD.',
               'Desarrollé módulos del Sistema de Fiscalización Electrónica (foto y videopapeletas): APIs REST, visor geoespacial (deck.gl/Leaflet) y streaming de video para la evidencia.',
@@ -233,13 +193,13 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
       },
       {
         company: 'ATU — Autoridad de Transporte Urbano',
-        period: 'Dic 2020 — Ene 2023',
+        period: 'Ene 2021 — Ene 2023',
         duration: '2 años',
         location: 'Lima y Callao, Perú',
         roles: [
           {
             role: 'Analista Programador · Híbrido',
-            period: 'Dic 2020 — Ene 2023',
+            period: 'Ene 2021 — Ene 2023',
             description: [
               'Implementé el módulo de papeletas del Sistema de Registro de Actividades (SRA) mediante APIs REST (Node.js/Express, SOLID), mejorando la eficiencia en la administración de infracciones.',
               'Desarrollé el módulo TUPA de la Pasarela de Pagos (pasarela.atu.gob.pe) con transacciones seguras (JWT) e integración del proveedor Niubiz, optimizando los pagos en línea.',
@@ -252,13 +212,13 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
       },
       {
         company: 'Cobra Perú',
-        period: 'Dic 2014 — Ene 2021',
+        period: 'Dic 2014 — Dic 2020',
         duration: '6 años',
         location: 'Lima — Telecomunicaciones (cliente Telefónica del Perú)',
         roles: [
           {
             role: 'Analista de Sistemas — Central · Presencial',
-            period: 'Nov 2018 — Ene 2021',
+            period: 'Nov 2018 — Dic 2020',
             description: [
               'Lideré la selección y formación del equipo de desarrollo web (JS/Node.js) e implementé el sistema GIA de gestión integral de administración (Zona Andina); administré bases de datos (SQL Server 2016, MongoDB) y tableros de BI (Qlik Sense, Power BI) para la alta dirección.',
             ],
@@ -348,6 +308,22 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         github: 'https://github.com/IsmaellHV/wahub-frontend',
         image: '/src/assets/projects/wahub.png',
       },
+      {
+        id: '06',
+        title: 'Exandal: calidad e IA',
+        description:
+          'Para Exandal Holding Group (agroindustria): amplié su sistema de calidad en Node.js integrado a SAP HANA y balanzas; construí el módulo de Tickets (Gantt, KPIs), ExcoBot (OpenAI con function calling sobre SAP) y un chatbot RAG híbrido de calidad e inocuidad.',
+        tags: ['Node.js', 'SAP HANA', 'OpenAI', 'RAG'],
+        client: 'Exandal Holding Group',
+      },
+      {
+        id: '07',
+        title: 'BizPeru: atención y pagos',
+        description:
+          'Para BizPeru (ISP y WiFi): su sistema de gestión (Node.js, MySQL, React) con facturación electrónica SUNAT vía Nubefact (boletas, facturas y notas de crédito), cobros en línea con Izipay y Culqi (tarjeta y Yape), asistente de WhatsApp con OpenAI (Meta Cloud API) y automatización de red con MikroTik y SmartOLT.',
+        tags: ['Node.js', 'Facturación SUNAT', 'Izipay', 'Culqi', 'MikroTik'],
+        client: 'BizPeru',
+      },
     ],
   },
   en: {
@@ -389,74 +365,34 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
     ],
     experiences: [
       {
-        company: 'SICRED — Mexico',
-        period: 'May 2025 — Jul 2026',
-        duration: '1 yr',
-        location: 'Remote',
+        company: 'Sicred Informática Ltda',
+        period: 'Jan 2026 — Sep 2026',
+        duration: '9 mos',
+        location: 'Mexico, mortgage lending · Remote',
         roles: [
           {
-            role: 'Full-Stack Developer · Freelance',
-            period: 'May 2025 — Jul 2026',
+            role: 'Senior Full Stack Developer',
+            period: 'Jan 2026 — Sep 2026',
             description: [
-              'Developed a microservices platform (NestJS + Fastify + Prisma) for credit-agent management and operations, under a Hexagonal + DDD + Clean architecture.',
-              'Built the mobile app (React Native + Expo, TypeScript) and the web frontend (React + RSuite + Tailwind) that consume the microservices.',
-              'Built a legal-document comparison platform with an in-house OCR microservice in Python (FastAPI + PyMuPDF + Tesseract) that digitizes scanned PDFs, and a self-hosted AI engine (Ollama) that contrasts documents and summarizes case files in a chat.',
-              'Automated CI/CD with GitHub Actions (QA and production environments): image build and push with Docker Buildx, semantic versioning and secret scanning (gitleaks), with container orchestration in Docker Compose.',
-              'Hardened security with Cloudflare (WAF, rate limiting and Turnstile anti-bot) and protected the APIs at application level with rate limiting (Fastify) and security headers (Helmet).',
+              'Developed a microservices platform (NestJS + Fastify + Prisma) for credit-agent management and operations, with a mobile app (React Native + Expo) and web frontend (React + RSuite + Tailwind), under a Hexagonal + DDD + Clean architecture.',
+              'Developing DAEFlow, the FOVISSSTE mortgage case origination platform: stage-based case workflow, notaries and follow-up, with market dashboards, maps and comparison of financial institutions.',
+              'Built the on-site Construction Verification system: microservices for RUV orders, assignment, progress, construction logbook and INFONAVIT report formats; a mobile app (React Native + Expo) with geolocation, maps, local storage (SQLite) and real-time alerts; and a web dashboard with maps (Leaflet).',
+              'Built a legal-document comparison platform with an in-house OCR microservice in Python (FastAPI + PyMuPDF + Tesseract) and a self-hosted AI engine (Ollama) that contrasts documents and summarizes case files in a chat.',
+              'Automated CI/CD with GitHub Actions (QA and production: Docker Buildx, semantic versioning, gitleaks secret scanning) and hardened security with Cloudflare (WAF, rate limiting, Turnstile), app-level rate limiting and Helmet.',
             ],
             tags: ['NestJS', 'React Native', 'Prisma', 'Python', 'Ollama', 'Cloudflare'],
           },
         ],
       },
       {
-        company: 'Exandal Holding Group',
-        period: 'Jul 2025 — Jun 2026',
-        duration: '1 yr',
-        location: 'Lima, Peru — Agro-industry',
-        roles: [
-          {
-            role: 'Full-Stack Developer · Self-employed',
-            period: 'Jul 2025 — Jun 2026',
-            description: [
-              'Maintained and extended the agro-industrial quality management and analysis system (lab tests, per-lot traceability) in Node.js.',
-              'Extended the system integrations: SAP (HANA via the hdb driver), scale devices over SerialPort and Excel/PDF reporting.',
-              'Developed the Tickets module (internal help desk on SAP HANA): assignment, in-progress, review and closing workflow with priorities, attachments, notes with read receipts, email notifications, a Gantt planner and a reports/KPIs dashboard.',
-              'Built ExcoBot, an OpenAI chatbot (function calling) that delivers SAP order traceability in natural language, with KPI charts.',
-              'Designed a RAG chatbot with hybrid retrieval to trace quality and food-safety results.',
-            ],
-            tags: ['Node.js', 'SAP HANA', 'OpenAI', 'RAG'],
-          },
-        ],
-      },
-      {
-        company: 'BizPeru',
-        period: 'Jan 2025 — Dec 2025',
-        duration: '1 yr',
-        location: 'Remote, Peru — ISP / WiFi',
-        roles: [
-          {
-            role: 'Full-Stack Developer · Freelance',
-            period: 'Jan 2025 — Dec 2025',
-            description: [
-              'Built a WhatsApp chatbot (whatsapp-web.js + OpenAI) with multi-session management and real-time communication (SocketCluster) for customer support.',
-              'Integrated the Niubiz payment gateway into the online store (checkout with card tokenization and charge capture), with a NestJS + Fastify + Prisma backend and a Next.js 16 + Tailwind frontend.',
-              'Automated the ISP network: provisioned WiFi hotspots on MikroTik (RouterOS API) and integrated SmartOLT (fiber optics), with PDF invoicing and vouchers.',
-              'Configured CI/CD with GitHub Actions (image build and push with Docker Buildx and semantic versioning) and orchestrated the services with Docker Compose.',
-              'Protected the APIs with Cloudflare (WAF, rate limiting and Turnstile anti-bot) and hardened the application with rate limiting (Express/Fastify) and security headers (Helmet).',
-            ],
-            tags: ['NestJS', 'Next.js', 'OpenAI', 'MikroTik', 'Cloudflare'],
-          },
-        ],
-      },
-      {
         company: 'Municipalidad Metropolitana de Lima',
-        period: 'Jun 2023 — Mar 2026',
-        duration: '3 yrs',
+        period: 'Jul 2023 — Dec 2025',
+        duration: '2 yrs 6 mos',
         location: 'Lima — SIAM System',
         roles: [
           {
-            role: 'Senior Programmer Analyst · Hybrid',
-            period: 'Jun 2023 — Mar 2026',
+            role: 'Senior Programmer Analyst · Service contract, hybrid',
+            period: 'Jul 2023 — Dic 2025',
             description: [
               'Was part of the team that developed SIAM, a Node.js/TypeScript microservices ecosystem with Docker, per-module CI/CD (GitHub Actions) and a Hexagonal + DDD architecture.',
               'Developed modules of the Electronic Enforcement System (photo and video tickets): REST APIs, a geospatial viewer (deck.gl/Leaflet) and video streaming for evidence.',
@@ -471,13 +407,13 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
       },
       {
         company: 'ATU — Urban Transport Authority',
-        period: 'Dec 2020 — Jan 2023',
+        period: 'Jan 2021 — Jan 2023',
         duration: '2 yrs',
         location: 'Lima & Callao, Peru',
         roles: [
           {
             role: 'Programmer Analyst · Hybrid',
-            period: 'Dec 2020 — Jan 2023',
+            period: 'Jan 2021 — Jan 2023',
             description: [
               'Implemented the tickets module of the Activity Registry System (SRA) via REST APIs (Node.js/Express, SOLID), improving the efficiency of infraction management.',
               'Developed the TUPA module of the Payment Gateway (pasarela.atu.gob.pe) with secure transactions (JWT) and the Niubiz provider integration, streamlining online payments.',
@@ -490,13 +426,13 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
       },
       {
         company: 'Cobra Perú',
-        period: 'Dec 2014 — Jan 2021',
+        period: 'Dec 2014 — Dec 2020',
         duration: '6 yrs',
         location: 'Lima — Telecommunications (client: Telefónica del Perú)',
         roles: [
           {
             role: 'Systems Analyst — Head Office · On-site',
-            period: 'Nov 2018 — Jan 2021',
+            period: 'Nov 2018 — Dec 2020',
             description: [
               'Led the selection and training of the web development team (JS/Node.js) and implemented the GIA integrated administration management system (Andean Zone); administered databases (SQL Server 2016, MongoDB) and BI dashboards (Qlik Sense, Power BI) for senior management.',
             ],
@@ -585,6 +521,22 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         link: 'https://ismaelhv.com/wahub/',
         github: 'https://github.com/IsmaellHV/wahub-frontend',
         image: '/src/assets/projects/wahub.png',
+      },
+      {
+        id: '06',
+        title: 'Exandal: quality and AI',
+        description:
+          'For Exandal Holding Group (agro-industry): extended its Node.js quality system integrated with SAP HANA and industrial scales; built the Tickets module (Gantt, KPIs), ExcoBot (OpenAI function calling over SAP) and a hybrid-retrieval RAG chatbot for quality and food safety.',
+        tags: ['Node.js', 'SAP HANA', 'OpenAI', 'RAG'],
+        client: 'Exandal Holding Group',
+      },
+      {
+        id: '07',
+        title: 'BizPeru: support and payments',
+        description:
+          'For BizPeru (ISP and WiFi): its management system (Node.js, MySQL, React) with SUNAT electronic invoicing through Nubefact (receipts, invoices and credit notes), online payments with Izipay and Culqi (card and Yape), a WhatsApp assistant with OpenAI (Meta Cloud API) and network automation with MikroTik and SmartOLT.',
+        tags: ['Node.js', 'SUNAT e-invoicing', 'Izipay', 'Culqi', 'MikroTik'],
+        client: 'BizPeru',
       },
     ],
   },
