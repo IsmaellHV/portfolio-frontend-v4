@@ -23,6 +23,7 @@ export interface Experience {
 
 export interface FeaturedProduct {
   title: string;
+  logo?: string;
   badge: string;
   accent: boolean;
   meta: string;
@@ -42,6 +43,7 @@ export interface ProductCard {
   linkLabel?: string;
   description: string;
   stack: string[];
+  image: { src: string; alt: string };
 }
 
 export interface SkillGroup {
@@ -61,19 +63,17 @@ export interface Certification {
 }
 
 export interface ChatMessage {
-  author?: string;
-  note: string;
-  text: string;
-  own?: boolean;
+  name: string;
+  lang: string;
+  original: string;
+  translation: string;
+  time: string;
 }
 
 export interface ChatPreview {
-  initials: string;
-  group: string;
-  members: string;
-  reading: string;
+  readerLang: string;
   messages: ChatMessage[];
-  composer: string;
+  reply: { text: string; time: string };
 }
 
 export interface PortfolioData {
@@ -110,20 +110,28 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
     },
     hero: {
       eyebrow: 'Senior Full Stack Engineer · AI and LLM · Lima, Peru',
-      title: 'I build full stack and AI systems that businesses run every day.',
+      title: 'I build full stack and AI software, from idea to production.',
       lead: '10+ years shipping React, Node.js and TypeScript platforms with hexagonal architecture, plus self-hosted LLMs and RAG. My experience spans mortgage lending, government, telecom and internet providers, in Peru and Mexico.',
     },
     chat: {
-      initials: 'PT',
-      group: 'Product team',
-      members: '4 members · 3 languages',
-      reading: 'Reading in English',
+      readerLang: 'EN',
       messages: [
-        { author: 'Ana', note: 'Ana · translated from Portuguese', text: 'Can we ship the release on Friday?' },
-        { author: 'Kenji', note: 'Kenji · translated from Japanese', text: 'Yes, all the tests are passing.' },
-        { note: 'Sent in Spanish · seen by 3', text: 'Perfecto, lo publico hoy.', own: true },
+        {
+          name: 'Anna',
+          lang: 'pt',
+          original: 'Bom dia! Vamos nos ver amanhã às dez?',
+          translation: 'Good morning! Shall we meet tomorrow at ten?',
+          time: '9:41 AM',
+        },
+        {
+          name: 'Kenji',
+          lang: 'ja',
+          original: 'いいね！地図は僕が持っていくよ。',
+          translation: 'Great! I’ll bring the map.',
+          time: '9:41 AM',
+        },
       ],
-      composer: 'Write in any language',
+      reply: { text: 'Perfect! I’ll bring the coffee.', time: '9:42 AM' },
     },
     experiences: [
       {
@@ -177,6 +185,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
     featuredProducts: [
       {
         title: 'Chatt World',
+        logo: '/work/chatt-world-logo.svg',
         badge: 'Own product',
         accent: true,
         meta: 'Live · chatt-world.com',
@@ -216,6 +225,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         description:
           'Detects missing personal protective equipment on live video, with RTSP cameras, alerts and a web dashboard.',
         stack: ['YOLO11n', 'PyTorch', 'OpenCV', 'FastAPI'],
+        image: { src: '/work/atalaya.webp', alt: 'Atalaya sign-in page with a camera view detecting workers' },
       },
       {
         title: 'Tawa Telcom',
@@ -225,6 +235,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         description:
           'Website for an internet provider with a server-side AI assistant, an integrated complaints book and structured-data SEO.',
         stack: ['Next.js 16', 'Tailwind CSS 4', 'TypeScript'],
+        image: { src: '/work/tawa.webp', alt: 'Tawa Telcom home page' },
       },
       {
         title: 'Notes',
@@ -234,6 +245,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         description:
           'Notes and tasks in one place, with nested notebooks, a Today view, a journal, relevance search and an AI writer.',
         stack: ['NestJS', 'Prisma', 'PostgreSQL', 'React', 'TipTap'],
+        image: { src: '/work/notes.webp', alt: 'Notes public home page' },
       },
       {
         title: 'waHub',
@@ -242,15 +254,26 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         linkLabel: 'ismaelhv.com/wahub',
         description: 'Connects WhatsApp numbers to AI agents through a visual flow editor, for automated replies.',
         stack: ['NestJS', 'Baileys', 'Next.js', 'React Flow', 'OpenAI'],
+        image: { src: '/work/wahub.webp', alt: 'waHub home page with an automation flow preview' },
       },
       {
-        title: 'FastLink and DevTools',
-        kind: 'Own products',
+        title: 'FastLink',
+        kind: 'Own product',
+        link: 'https://ismaelhv.com/fastlink/',
+        linkLabel: 'ismaelhv.com/fastlink',
+        description: 'A free URL shortener with captcha protection: no account, no tracking, a short link in one step.',
+        stack: ['Astro', 'React', 'Tailwind CSS', 'Turnstile'],
+        image: { src: '/work/fastlink.webp', alt: 'FastLink home page with the URL shortener form' },
+      },
+      {
+        title: 'DevTools',
+        kind: 'Own product',
         link: 'https://ismaelhv.com/tools/',
         linkLabel: 'ismaelhv.com/tools',
         description:
-          'A URL shortener with bot protection, and developer utilities that run in the browser without uploading data.',
-        stack: ['Astro', 'React', 'Tailwind CSS', 'Turnstile'],
+          'Developer utilities that run in the browser without uploading data: encoding, JWT, AES, QR codes, JSON and more.',
+        stack: ['Astro', 'React', 'TypeScript', 'Tailwind CSS'],
+        image: { src: '/work/tools.webp', alt: 'DevTools home page with the list of browser tools' },
       },
     ],
     skills: [
@@ -299,20 +322,28 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
     },
     hero: {
       eyebrow: 'Senior Full Stack Engineer · IA y LLM · Lima, Perú',
-      title: 'Construyo sistemas full stack y de IA que las empresas usan todos los días.',
+      title: 'Desarrollo software full stack e IA, de la idea a producción.',
       lead: 'Más de 10 años desarrollando plataformas con React, Node.js y TypeScript sobre arquitectura hexagonal, además de LLM self-hosted y RAG. Mi experiencia abarca crédito hipotecario, sector público, telecomunicaciones y proveedores de internet, en Perú y México.',
     },
     chat: {
-      initials: 'EP',
-      group: 'Equipo de producto',
-      members: '4 miembros · 3 idiomas',
-      reading: 'Leyendo en español',
+      readerLang: 'ES',
       messages: [
-        { author: 'Ana', note: 'Ana · traducido del portugués', text: '¿Podemos publicar la versión el viernes?' },
-        { author: 'Kenji', note: 'Kenji · traducido del japonés', text: 'Sí, todas las pruebas pasan.' },
-        { note: 'Enviado en inglés · visto por 3', text: 'Perfect, I will ship it today.', own: true },
+        {
+          name: 'Ana',
+          lang: 'pt',
+          original: 'Bom dia! Vamos nos ver amanhã às dez?',
+          translation: '¡Buenos días! ¿Quedamos mañana a las diez?',
+          time: '9:41',
+        },
+        {
+          name: 'Kenji',
+          lang: 'ja',
+          original: 'いいね！地図は僕が持っていくよ。',
+          translation: '¡Genial! Yo llevo el mapa.',
+          time: '9:41',
+        },
       ],
-      composer: 'Escribe en cualquier idioma',
+      reply: { text: '¡Perfecto! Llevo el café.', time: '9:42' },
     },
     experiences: [
       {
@@ -366,6 +397,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
     featuredProducts: [
       {
         title: 'Chatt World',
+        logo: '/work/chatt-world-logo.svg',
         badge: 'Producto propio',
         accent: true,
         meta: 'En línea · chatt-world.com',
@@ -405,6 +437,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         description:
           'Detecta la falta de equipos de protección personal en video en vivo, con cámaras RTSP, alertas y un panel web.',
         stack: ['YOLO11n', 'PyTorch', 'OpenCV', 'FastAPI'],
+        image: { src: '/work/atalaya.webp', alt: 'Acceso de Atalaya con una cámara que detecta trabajadores' },
       },
       {
         title: 'Tawa Telcom',
@@ -414,6 +447,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         description:
           'Sitio de un proveedor de internet con asistente de IA en el servidor, Libro de Reclamaciones integrado y SEO con datos estructurados.',
         stack: ['Next.js 16', 'Tailwind CSS 4', 'TypeScript'],
+        image: { src: '/work/tawa.webp', alt: 'Página de inicio de Tawa Telcom' },
       },
       {
         title: 'Notes',
@@ -423,6 +457,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         description:
           'Notas y tareas en un solo lugar, con cuadernos anidados, vista Hoy, diario, búsqueda por relevancia y redactor con IA.',
         stack: ['NestJS', 'Prisma', 'PostgreSQL', 'React', 'TipTap'],
+        image: { src: '/work/notes.webp', alt: 'Portada pública de Notes' },
       },
       {
         title: 'waHub',
@@ -432,15 +467,26 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         description:
           'Conecta números de WhatsApp con agentes de IA mediante un editor visual de flujos, para respuestas automáticas.',
         stack: ['NestJS', 'Baileys', 'Next.js', 'React Flow', 'OpenAI'],
+        image: { src: '/work/wahub.webp', alt: 'Página de inicio de waHub con un flujo de automatización' },
       },
       {
-        title: 'FastLink y DevTools',
-        kind: 'Productos propios',
+        title: 'FastLink',
+        kind: 'Producto propio',
+        link: 'https://ismaelhv.com/fastlink/',
+        linkLabel: 'ismaelhv.com/fastlink',
+        description: 'Acortador de URLs gratuito con protección captcha: sin cuenta, sin rastreo, un enlace corto en un paso.',
+        stack: ['Astro', 'React', 'Tailwind CSS', 'Turnstile'],
+        image: { src: '/work/fastlink.webp', alt: 'Página de FastLink con el formulario para acortar enlaces' },
+      },
+      {
+        title: 'DevTools',
+        kind: 'Producto propio',
         link: 'https://ismaelhv.com/tools/',
         linkLabel: 'ismaelhv.com/tools',
         description:
-          'Un acortador de URLs con protección anti-bots y utilidades para desarrolladores que se ejecutan en el navegador sin subir datos.',
-        stack: ['Astro', 'React', 'Tailwind CSS', 'Turnstile'],
+          'Utilidades para desarrolladores que se ejecutan en el navegador sin subir datos: codificación, JWT, AES, códigos QR, JSON y más.',
+        stack: ['Astro', 'React', 'TypeScript', 'Tailwind CSS'],
+        image: { src: '/work/tools.webp', alt: 'Página de DevTools con la lista de herramientas' },
       },
     ],
     skills: [

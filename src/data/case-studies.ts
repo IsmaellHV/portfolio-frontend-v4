@@ -6,6 +6,7 @@ export interface CaseStudy {
   backLabel: string;
   eyebrow: string;
   title: string;
+  logo: string;
   lead: string;
   visitLabel: string;
   url: string;
@@ -35,6 +36,7 @@ export const CHATT_WORLD: Record<Locale, CaseStudy> = {
     backLabel: 'All work',
     eyebrow: 'Case study · Own product',
     title: 'Chatt World',
+    logo: '/work/chatt-world-logo.svg',
     lead: "A group chat where every message arrives in each reader's language, so people who don't share a language can talk in the same group.",
     visitLabel: 'Visit chatt-world.com',
     url: 'https://chatt-world.com',
@@ -148,6 +150,7 @@ export const CHATT_WORLD: Record<Locale, CaseStudy> = {
     backLabel: 'Todo el trabajo',
     eyebrow: 'Caso de estudio · Producto propio',
     title: 'Chatt World',
+    logo: '/work/chatt-world-logo.svg',
     lead: 'Un chat de grupos donde cada mensaje llega en el idioma de cada lector, para que personas que no comparten idioma conversen en el mismo grupo.',
     visitLabel: 'Visitar chatt-world.com',
     url: 'https://chatt-world.com',

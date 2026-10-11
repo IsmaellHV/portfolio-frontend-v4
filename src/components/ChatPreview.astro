@@ -8,34 +8,43 @@ interface Props {
 const { chat } = Astro.props;
 ---
 
-<div class="chat">
-  <div class="chat-head">
-    <div class="chat-group">
-      <span class="chat-avatar" aria-hidden="true">{chat.initials}</span>
-      <div>
-        <p class="chat-name">{chat.group}</p>
-        <p class="chat-members">{chat.members}</p>
-      </div>
-    </div>
-    <span class="pill pill-accent">{chat.reading}</span>
+<!-- Mirrors the Chatt World sign-in demo (chat-frontend/src/componentes/Presentacion.tsx): same bubbles, colors and type. -->
+<div class="cw" aria-hidden="true">
+  <div class="cw-bar">
+    <span class="cw-brand">
+      <img src="/work/chatt-world-logo.svg" alt="" width="24" height="24" />
+      Chatt World
+    </span>
+    <span class="cw-lang">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.4"></circle><path d="M2.6 10h14.8M10 2.6c2 2.1 3 4.6 3 7.4s-1 5.3-3 7.4c-2-2.1-3-4.6-3-7.4s1-5.3 3-7.4z"></path></svg>
+      {chat.readerLang}
+    </span>
   </div>
-  <div class="chat-body">
+  <div class="cw-canvas">
     {
       chat.messages.map(m => (
-        <div class:list={['bubble-wrap', { own: m.own }]}>
-          {!m.own && <p class="bubble-note">{m.note}</p>}
-          <p class="bubble">{m.text}</p>
-          {m.own && <p class="bubble-note">{m.note}</p>}
+        <div class="cw-bubble">
+          <p class="cw-name">{m.name}</p>
+          <p class="cw-text" lang={m.lang}>
+            {m.original}
+          </p>
+          <div class="cw-translation">
+            <span class="cw-tag">
+              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h7M6.5 4v2M8.4 6c0 3-2 5.4-5.4 6.6M5 9.2c.9 2 2.6 3.4 5 4.2M11 17l3.4-8 3.4 8M12.5 14.4h4.8"></path></svg>
+              {m.lang.toUpperCase()} → {chat.readerLang}
+            </span>
+            <p class="cw-translated">{m.translation}</p>
+          </div>
+          <p class="cw-time">{m.time}</p>
         </div>
       ))
     }
-  </div>
-  <div class="chat-foot">
-    <div class="composer">
-      <span>{chat.composer}</span>
-      <span class="composer-send" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-      </span>
+    <div class="cw-bubble cw-mine">
+      <p class="cw-text">{chat.reply.text}</p>
+      <p class="cw-time">
+        {chat.reply.time}
+        <svg class="cw-read" width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 10.5 6 14l6-8"></path><path d="M9 12.6 10.4 14l6-8"></path></svg>
+      </p>
     </div>
   </div>
 </div>

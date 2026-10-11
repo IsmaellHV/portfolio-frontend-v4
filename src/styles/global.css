@@ -298,6 +298,9 @@ main:focus {
   padding-block: 16px;
 }
 .wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 20px;
@@ -401,110 +404,151 @@ main:focus {
   color: var(--fg-muted);
 }
 
-/* ---------- Chat preview ---------- */
-.chat {
-  background: var(--surface);
+/* ---------- Chat preview ----------
+   A window into Chatt World with its own palette ("warm bubbles", see
+   chat-frontend/src/index.css and apariencia/temas.css), so it reads as the
+   real product rather than as part of this site. */
+.cw {
+  --cw-papel: #faf7f2;
+  --cw-tarjeta: #ffffff;
+  --cw-mia: #dbe9d5;
+  --cw-tinta: #1c1b17;
+  --cw-tinta-2: #555147;
+  --cw-tinta-3: #5f5a4e;
+  --cw-tinta-3-mia: #5f5a4e;
+  --cw-linea: #e7e1d6;
+  --cw-ambar: #955408;
+  --cw-accion: #4a6b3e;
+  --cw-lienzo: #efeae1;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 24px;
-  overflow: hidden;
+  background: var(--cw-lienzo);
+  color: var(--cw-tinta);
+  font-family: 'Nunito Variable', 'Nunito', ui-sans-serif, system-ui, sans-serif;
 }
-.chat-head {
+:root[data-theme='dark'] .cw {
+  --cw-papel: #15140f;
+  --cw-tarjeta: #201e19;
+  --cw-mia: #2c3a28;
+  --cw-tinta: #f2efe8;
+  --cw-tinta-2: #b4ae9f;
+  --cw-tinta-3: #8e8878;
+  --cw-tinta-3-mia: #aaa492;
+  --cw-linea: #312e27;
+  --cw-ambar: #e4a147;
+  --cw-accion: #9dc48a;
+  --cw-lienzo: #0d0c09;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .cw {
+    --cw-papel: #15140f;
+    --cw-tarjeta: #201e19;
+    --cw-mia: #2c3a28;
+    --cw-tinta: #f2efe8;
+    --cw-tinta-2: #b4ae9f;
+    --cw-tinta-3: #8e8878;
+    --cw-tinta-3-mia: #aaa492;
+    --cw-linea: #312e27;
+    --cw-ambar: #e4a147;
+    --cw-accion: #9dc48a;
+    --cw-lienzo: #0d0c09;
+  }
+}
+.cw-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--line);
+  padding: 14px 18px;
+  background: var(--cw-papel);
+  border-bottom: 1px solid var(--cw-linea);
 }
-.chat-group {
-  display: flex;
+.cw-brand {
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  min-width: 0;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
 }
-.chat-avatar {
-  flex: none;
-  display: flex;
+.cw-lang {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent-ink);
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 14px;
-}
-.chat-name {
-  font-weight: 600;
-  font-size: 15px;
-}
-.chat-members {
-  font-size: 12px;
-  color: var(--fg-faint);
-}
-.chat .pill {
-  flex: none;
-  font-size: 11px;
+  gap: 6px;
   padding: 4px 10px;
-  white-space: nowrap;
+  border: 1px solid var(--cw-linea);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
 }
-.chat-body {
+.cw-canvas {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   padding: 20px;
 }
-.bubble-wrap {
-  max-width: 84%;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.cw-bubble {
+  align-self: flex-start;
+  max-width: 88%;
+  padding: 9px 12px 8px;
+  border: 1px solid var(--cw-linea);
+  border-radius: 14px 14px 14px 4px;
+  background: var(--cw-tarjeta);
+  box-shadow: 0 1px 1.5px rgb(28 27 23 / 0.06);
 }
-.bubble-wrap.own {
-  align-self: flex-end;
-  align-items: flex-end;
-}
-.bubble {
-  padding: 12px 14px;
-  border-radius: 4px 16px 16px 16px;
-  background: var(--surface-2);
-  font-size: 15px;
-}
-.own .bubble {
-  border-radius: 16px 4px 16px 16px;
-  background: var(--accent);
-  color: var(--on-accent);
-}
-.bubble-note {
+.cw-name {
   font-size: 12px;
-  color: var(--fg-faint);
+  font-weight: 800;
+  color: var(--cw-tinta-2);
 }
-.chat-foot {
-  padding: 0 20px 20px;
+.cw-text {
+  font-size: 15px;
+  line-height: 1.45;
 }
-.composer {
+.cw-translation {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--cw-linea);
+}
+.cw-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cw-ambar);
+}
+.cw-translated {
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--cw-tinta-2);
+}
+.cw-time {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 10px 10px 10px 18px;
-  font-size: 14px;
-  color: var(--fg-faint);
+  justify-content: flex-end;
+  gap: 5px;
+  margin-top: 4px;
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--cw-tinta-3);
 }
-.composer-send {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  background: var(--accent);
-  color: var(--on-accent);
+.cw-mine {
+  align-self: flex-end;
+  border-color: transparent;
+  border-radius: 14px 14px 4px 14px;
+  background: var(--cw-mia);
+  box-shadow: none;
+}
+.cw-mine .cw-time {
+  color: var(--cw-tinta-3-mia);
+}
+.cw-read {
+  color: var(--cw-accion);
 }
 
 /* ---------- Sections ---------- */
@@ -634,6 +678,9 @@ main:focus {
   color: var(--fg-muted);
 }
 .feature-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 34px;
@@ -672,9 +719,25 @@ main:focus {
 .product {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 28px;
   border-radius: 20px;
+  overflow: hidden;
+}
+.product-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+}
+.product-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 28px 28px;
 }
 .product-meta {
   display: flex;
@@ -779,11 +842,18 @@ main:focus {
   padding-block: 80px 48px;
 }
 .cs-title {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(3rem, 2rem + 4vw, 4.5rem);
   line-height: 1;
   letter-spacing: -0.03em;
+}
+.cs-title img {
+  width: 0.9em;
+  height: 0.9em;
 }
 .cs-lead {
   font-size: 22px;
@@ -998,8 +1068,8 @@ main:focus {
   .cs-next {
     padding: 32px 24px;
   }
-  .chat-head {
-    flex-wrap: wrap;
+  .cw-canvas {
+    padding: 14px;
   }
 }
 
@@ -1007,8 +1077,12 @@ main:focus {
   .site-nav {
     gap: 12px;
   }
-  .wordmark {
-    font-size: 18px;
+  .wordmark-text {
+    display: none;
+  }
+  .wordmark img {
+    width: 32px;
+    height: 32px;
   }
   .nav-actions {
     gap: 6px;

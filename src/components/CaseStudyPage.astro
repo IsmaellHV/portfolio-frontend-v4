@@ -22,7 +22,10 @@ const host = new URL(study.url).host;
 <main id="main" tabindex="-1">
   <section aria-labelledby="cs-title" class="wrap cs-hero">
     <p class="eyebrow"><span class="dot" aria-hidden="true"></span>{study.eyebrow}</p>
-    <h1 id="cs-title" class="cs-title">{study.title}</h1>
+    <h1 id="cs-title" class="cs-title">
+      <img src={study.logo} alt="" width="64" height="64" />
+      {study.title}
+    </h1>
     <p class="cs-lead muted">{study.lead}</p>
     <div class="actions">
       <a class="btn btn-primary" href={study.url} target="_blank" rel="noopener noreferrer">{study.visitLabel} ↗</a>

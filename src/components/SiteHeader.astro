@@ -26,7 +26,10 @@ const locales: Locale[] = ['en', 'es'];
 
 <header class="site-header">
   <nav aria-label={ui.nav.label} class="site-nav wrap">
-    <a href={variant === 'home' ? '#top' : home} class="wordmark">ismaelhv<span class="ink">.com</span></a>
+    <a href={variant === 'home' ? '#top' : home} class="wordmark" aria-label="ismaelhv.com">
+      <img src="/favicon.svg" alt="" width="28" height="28" />
+      <span class="wordmark-text">ismaelhv<span class="ink">.com</span></span>
+    </a>
     {
       variant === 'home' && (
         <div class="nav-links">
