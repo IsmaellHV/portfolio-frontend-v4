@@ -8,7 +8,7 @@ export const WORLD3D_URL =
 export const CONTACT_EMAIL =
   import.meta.env.PUBLIC_CONTACT_EMAIL || "ismaelhurtadov@gmail.com";
 
-/** Umami site (self-hosted stats at estadisticas.happystarsclub.com, no cookies). The tracker loads from /visitas.js on this same domain. */
+/** Umami site (self-hosted stats, panel at estadisticas.ismaelhv.com, no cookies). The tracker loads from /visitas.js on this same domain. */
 export const UMAMI_WEBSITE_ID = "9caf7c43-35ea-4675-ba5b-70677225d705";
 
 export const CV_BY_LOCALE: Record<Locale, string> = {
