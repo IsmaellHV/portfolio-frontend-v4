@@ -28,7 +28,14 @@ const host = new URL(study.url).host;
     </h1>
     <p class="cs-lead muted">{study.lead}</p>
     <div class="actions">
-      <a class="btn btn-primary" href={study.url} target="_blank" rel="noopener noreferrer">{study.visitLabel} ↗</a>
+      <a
+        class="btn btn-primary"
+        href={study.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-umami-event="visitar-producto"
+        data-umami-event-producto={study.title}>{study.visitLabel} ↗</a
+      >
     </div>
     <dl class="facts">
       {
@@ -140,7 +147,14 @@ const host = new URL(study.url).host;
       </div>
       <div class="actions">
         <a class="btn btn-primary" href={`${homePath(locale)}#work`}>{study.next.back}</a>
-        <a class="btn btn-ghost" href={CV_BY_LOCALE[locale]} download>{ui.downloadCV}</a>
+        <a
+          class="btn btn-ghost"
+          href={CV_BY_LOCALE[locale]}
+          download
+          data-umami-event="descargar-cv"
+          data-umami-event-idioma={locale}
+          data-umami-event-lugar="caso">{ui.downloadCV}</a
+        >
       </div>
     </div>
   </section>

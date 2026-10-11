@@ -32,7 +32,14 @@ const external = { target: '_blank', rel: 'noopener noreferrer' };
       <h1 id="hero-title" class="hero-title">{data.hero.title}</h1>
       <p class="hero-lead">{data.hero.lead}</p>
       <div class="actions">
-        <a class="btn btn-primary" href={cv} download>
+        <a
+          class="btn btn-primary"
+          href={cv}
+          download
+          data-umami-event="descargar-cv"
+          data-umami-event-idioma={locale}
+          data-umami-event-lugar="portada"
+        >
           <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
           {ui.downloadCV}
         </a>
@@ -44,19 +51,37 @@ const external = { target: '_blank', rel: 'noopener noreferrer' };
       <div class="hero-links">
         {
           data.profile.socials.map(s => (
-            <a class="text-link tap" href={s.url} {...external}>
+            <a
+              class="text-link tap"
+              href={s.url}
+              {...external}
+              data-umami-event="contacto"
+              data-umami-event-canal={s.platform}
+              data-umami-event-lugar="portada"
+            >
               {s.platform} ↗
             </a>
           ))
         }
-        <a class="text-link tap" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+        <a
+          class="text-link tap"
+          href={`mailto:${CONTACT_EMAIL}`}
+          data-umami-event="contacto"
+          data-umami-event-canal="email"
+          data-umami-event-lugar="portada">{CONTACT_EMAIL}</a
+        >
       </div>
     </div>
     <figure aria-label={ui.chatFigure} class="hero-figure">
       <ChatPreview chat={data.chat} />
       <figcaption class="hero-caption">
         <span>{ui.chatCaption}</span>
-        <a class="text-link" href={CHATT_WORLD_PATHS[locale]}>{ui.readCaseStudy} →</a>
+        <a
+          class="text-link"
+          href={CHATT_WORLD_PATHS[locale]}
+          data-umami-event="caso-estudio"
+          data-umami-event-lugar="portada">{ui.readCaseStudy} →</a
+        >
       </figcaption>
     </figure>
   </section>
@@ -90,7 +115,14 @@ const external = { target: '_blank', rel: 'noopener noreferrer' };
           ))
         }
       </ol>
-      <a class="text-link tap muted" href={cv} download>{ui.experience.fullHistory} →</a>
+      <a
+        class="text-link tap muted"
+        href={cv}
+        download
+        data-umami-event="descargar-cv"
+        data-umami-event-idioma={locale}
+        data-umami-event-lugar="experiencia">{ui.experience.fullHistory} →</a
+      >
     </div>
   </section>
 
@@ -124,12 +156,18 @@ const external = { target: '_blank', rel: 'noopener noreferrer' };
             {(p.caseStudy || p.link) && (
               <div class="feature-links">
                 {p.caseStudy && (
-                  <a class="btn btn-ghost btn-sm" href={p.caseStudy}>
+                  <a class="btn btn-ghost btn-sm" href={p.caseStudy} data-umami-event="caso-estudio" data-umami-event-lugar="productos">
                     {ui.readCaseStudy} →
                   </a>
                 )}
                 {p.link && (
-                  <a class="text-link tap muted" href={p.link} {...external}>
+                  <a
+                    class="text-link tap muted"
+                    href={p.link}
+                    {...external}
+                    data-umami-event="visitar-producto"
+                    data-umami-event-producto={p.title}
+                  >
                     {ui.visitSite} ↗
                   </a>
                 )}
@@ -167,7 +205,13 @@ const external = { target: '_blank', rel: 'noopener noreferrer' };
               <div class="product-meta">
                 <span>{p.kind}</span>
                 {p.link ? (
-                  <a class="text-link" href={p.link} {...external}>
+                  <a
+                  class="text-link"
+                  href={p.link}
+                  {...external}
+                  data-umami-event="visitar-producto"
+                  data-umami-event-producto={p.title}
+                >
                     {p.linkLabel} ↗
                   </a>
                 ) : (
@@ -265,16 +309,45 @@ const external = { target: '_blank', rel: 'noopener noreferrer' };
         </div>
       </dl>
       <div class="actions">
-        <a class="btn btn-primary" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+        <a
+          class="btn btn-primary"
+          href={`mailto:${CONTACT_EMAIL}`}
+          data-umami-event="contacto"
+          data-umami-event-canal="email"
+          data-umami-event-lugar="contacto">{CONTACT_EMAIL}</a
+        >
         {
           linkedin && (
-            <a class="btn btn-ghost" href={linkedin.url} {...external}>
+            <a
+              class="btn btn-ghost"
+              href={linkedin.url}
+              {...external}
+              data-umami-event="contacto"
+              data-umami-event-canal="LinkedIn"
+              data-umami-event-lugar="contacto"
+            >
               LinkedIn
             </a>
           )
         }
-        <a class="btn btn-ghost" href={CV_BY_LOCALE.en} download hreflang="en">{ui.contact.cvEn}</a>
-        <a class="btn btn-ghost" href={CV_BY_LOCALE.es} download hreflang="es">{ui.contact.cvEs}</a>
+        <a
+          class="btn btn-ghost"
+          href={CV_BY_LOCALE.en}
+          download
+          hreflang="en"
+          data-umami-event="descargar-cv"
+          data-umami-event-idioma="en"
+          data-umami-event-lugar="contacto">{ui.contact.cvEn}</a
+        >
+        <a
+          class="btn btn-ghost"
+          href={CV_BY_LOCALE.es}
+          download
+          hreflang="es"
+          data-umami-event="descargar-cv"
+          data-umami-event-idioma="es"
+          data-umami-event-lugar="contacto">{ui.contact.cvEs}</a
+        >
       </div>
     </div>
   </section>

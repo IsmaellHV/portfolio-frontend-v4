@@ -1,16 +1,24 @@
-import type { Locale } from '~/data/portfolio';
+import type { Locale } from "~/data/portfolio";
 
-export const SITE_URL = (import.meta.env.PUBLIC_SITE_URL || 'https://ismaelhv.com').replace(/\/$/, '');
-export const WORLD3D_URL = import.meta.env.PUBLIC_WORLD3D_URL || 'https://ismaelhv.com/3d/';
-export const CONTACT_EMAIL = import.meta.env.PUBLIC_CONTACT_EMAIL || 'ismaelhurtadov@gmail.com';
+export const SITE_URL = (
+  import.meta.env.PUBLIC_SITE_URL || "https://ismaelhv.com"
+).replace(/\/$/, "");
+export const WORLD3D_URL =
+  import.meta.env.PUBLIC_WORLD3D_URL || "https://ismaelhv.com/3d/";
+export const CONTACT_EMAIL =
+  import.meta.env.PUBLIC_CONTACT_EMAIL || "ismaelhurtadov@gmail.com";
+
+/** Umami site (self-hosted stats at estadisticas.happystarsclub.com, no cookies). The tracker loads from /visitas.js on this same domain. */
+export const UMAMI_WEBSITE_ID = "9caf7c43-35ea-4675-ba5b-70677225d705";
 
 export const CV_BY_LOCALE: Record<Locale, string> = {
-  en: '/cv/Ismael-Hurtado-CV-EN.pdf',
-  es: '/cv/Ismael-Hurtado-CV-ES.pdf',
+  en: "/cv/Ismael-Hurtado-CV-EN.pdf",
+  es: "/cv/Ismael-Hurtado-CV-ES.pdf",
 };
 
 /** Home path per locale — EN lives at the root, ES under /es/. */
-export const homePath = (locale: Locale): string => (locale === 'en' ? '/' : '/es/');
+export const homePath = (locale: Locale): string =>
+  locale === "en" ? "/" : "/es/";
 
 /** Older portfolio iterations, newest first. Add v2/v3/city here as they ship. */
 export interface PreviousVersion {
@@ -21,8 +29,18 @@ export interface PreviousVersion {
 }
 
 export const PREVIOUS_VERSIONS: PreviousVersion[] = [
-  { label: 'v2', year: '2025', stack: 'Astro · Tailwind', url: 'https://v2.ismaelhv.com' },
-  { label: 'v1', year: '2024', stack: 'React · Tailwind · Node', url: 'https://v1.ismaelhv.com' },
+  {
+    label: "v2",
+    year: "2025",
+    stack: "Astro · Tailwind",
+    url: "https://v2.ismaelhv.com",
+  },
+  {
+    label: "v1",
+    year: "2024",
+    stack: "React · Tailwind · Node",
+    url: "https://v1.ismaelhv.com",
+  },
 ];
 
 export const absoluteUrl = (path: string): string => `${SITE_URL}${path}`;

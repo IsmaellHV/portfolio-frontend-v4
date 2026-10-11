@@ -8,7 +8,7 @@ import '@fontsource-variable/nunito';
 import '~/styles/global.css';
 import type { Locale } from '~/data/portfolio';
 import { UI_BY_LOCALE } from '~/data/ui';
-import { absoluteUrl, homePath } from '~/lib/site';
+import { UMAMI_WEBSITE_ID, absoluteUrl, homePath } from '~/lib/site';
 
 interface Props {
   locale: Locale;
@@ -73,6 +73,12 @@ const ogImage = absoluteUrl('/og.png');
     <meta name="theme-color" content="#0a0c0b" media="(prefers-color-scheme: dark)" />
 
     {jsonLd.map(block => <script is:inline type="application/ld+json" set:html={JSON.stringify(block)} />)}
+
+    {
+      import.meta.env.PROD && (
+        <script is:inline defer src="/visitas.js" data-website-id={UMAMI_WEBSITE_ID} data-domains="ismaelhv.com" />
+      )
+    }
 
     <script is:inline>
       (() => {
