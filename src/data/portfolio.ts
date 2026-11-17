@@ -142,7 +142,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         bullets: [
           'Built DAEFlow, the FOVISSSTE mortgage case origination platform, and a field Construction Verification system with a mobile app',
           'Built a legal document comparison platform with a self-hosted LLM that summarizes case files',
-          'Defined the platform architecture and automated CI/CD; deployed services to a Kubernetes test cluster',
+          'Defined the platform architecture and automated CI/CD; deployed the services on Kubernetes (k3s)',
         ],
         stack: ['NestJS', 'Fastify', 'Prisma', 'React Native', 'Python', 'Ollama', 'Kubernetes'],
       },
@@ -354,7 +354,7 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         bullets: [
           'Desarrollé DAEFlow, la plataforma de originación de expedientes hipotecarios FOVISSSTE, y el sistema de Verificación de Obra en campo con app móvil',
           'Construí una plataforma de comparación de documentos jurídicos con un LLM self-hosted que resume expedientes',
-          'Definí la arquitectura de la plataforma y automaticé el CI/CD; desplegué servicios en un clúster de pruebas con Kubernetes',
+          'Definí la arquitectura de la plataforma y automaticé el CI/CD; desplegué los servicios en Kubernetes (k3s)',
         ],
         stack: ['NestJS', 'Fastify', 'Prisma', 'React Native', 'Python', 'Ollama', 'Kubernetes'],
       },
